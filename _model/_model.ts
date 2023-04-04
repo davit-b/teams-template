@@ -15,9 +15,9 @@ export type TeamId = string
 export interface Team {
   id: TeamId
   name: string
-  members: Set<User>
+  members: User[]
   eventHistory: Event[]
-  teams: Set<Team>
+  teams: Team[]
   visiblity: boolean
 }
 
@@ -43,3 +43,19 @@ export interface User {
   membershipStatus: "Invited" | "Accepted"
   eventHistory: Event[]
 }
+
+export type SafeOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+export interface NewUserInput {
+  githubId: string
+  teamId: TeamId
+  teamName: string
+}
+
+export interface InviteUserAction {
+  newUser: NewUserInput
+  toTeam: SafeOmit<Team, "eventHistory" | "members" | "teams" | "visiblity">
+  inviter: SafeOmit<User, "eventHistory" | "membershipStatus" | "teams" | "avatarUrl" | "name">
+}
+
+export type InviteUserCallback = () => void

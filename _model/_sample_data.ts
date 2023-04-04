@@ -4,7 +4,7 @@ import { AdminRole, UserRole } from "./_model.ts"
 export const sampleTeam: Team = {
   id: "t1",
   name: "Awesome Team",
-  members: new Set([
+  members: [
     {
       id: "u1",
       name: "Alice",
@@ -25,7 +25,7 @@ export const sampleTeam: Team = {
       membershipStatus: "Accepted",
       eventHistory: [],
     },
-  ]),
+  ],
   eventHistory: [
     {
       date: new Date("2023-03-20T10:00:00Z"),
@@ -76,14 +76,14 @@ export const sampleTeam: Team = {
       },
     },
   ],
-  teams: new Set(),
+  teams: [],
   visiblity: true,
 }
 
 export const sampleTeam2: Team = {
   id: "t1" as TeamId,
   name: "Awesome Team",
-  members: new Set([
+  members: [
     {
       id: "u1",
       name: "Alice",
@@ -134,14 +134,14 @@ export const sampleTeam2: Team = {
       membershipStatus: "Accepted",
       eventHistory: [],
     },
-  ]),
+  ],
   eventHistory: [],
-  teams: new Set(),
+  teams: [],
   visiblity: true,
 }
 
 localStorage.setItem(
-  "test4",
+  "crosshatch",
   JSON.stringify(sampleTeam2, (_, value) => value instanceof Set ? [...value] : value),
 )
 
