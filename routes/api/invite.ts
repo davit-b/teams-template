@@ -7,7 +7,6 @@ const gh_token = env["gh_token"]
 
 export const handler: Handlers = {
   async POST(req: Request, _ctx: HandlerContext) {
-    // const url = new URL(req.url)
     const input: NewUserInput = await req?.json()
     const newUser: User = await fetch(`https://api.github.com/users/${input.githubId}`, {
       headers: {
@@ -26,17 +25,33 @@ export const handler: Handlers = {
       }
     })
 
-    const result: Team = JSON.parse(localStorage.getItem(input.teamName) ?? "")
+    const localItem = localStorage.getItem(input.teamName)
+
+    const result: Team = (localItem)
+      ? JSON.parse(localItem)
+      : createNewTeam(input.teamName)
+
     const updatedTeam: Team = {
       ...result,
       members: [...result.members, newUser],
     }
 
-    console.log(input.teamName)
     localStorage.setItem(input.teamName, JSON.stringify(updatedTeam))
-
-    console.log(updatedTeam)
 
     return new Response(JSON.stringify(newUser))
   },
+}
+
+function createNewTeam(teamName: string) {
+  localStorage.setItem(
+    teamName,
+    JSON.stringify({
+      id: crypto.randomUUID(),
+      name: teamName,
+      members: [],
+      eventHistory: [],
+      teams: [],
+      visiblity: true,
+    }),
+  )
 }

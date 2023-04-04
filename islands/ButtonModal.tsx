@@ -51,7 +51,6 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
   // @ts-ignore
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, key: string) => {
     const element = e.target as HTMLInputElement
-    // console.log(element.value)
     setFields({ ...fields, [key]: element.value })
   }, [fields])
 

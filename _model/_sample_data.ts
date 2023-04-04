@@ -144,5 +144,3 @@ localStorage.setItem(
   "crosshatch",
   JSON.stringify(sampleTeam2, (_, value) => value instanceof Set ? [...value] : value),
 )
-
-// Array.from(sampleTeam.members).map((obj) => console.log(JSON.stringify(obj)))

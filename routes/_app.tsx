@@ -7,7 +7,7 @@ export default function App({ Component }: AppProps) {
   return (
     <html data-custom="data">
       <Head>
-        <title>Fresh</title>
+        <title>Deno Teams</title>
         {/* <link rel="stylesheet" href={asset("style.css")} /> */}
         {/* <link rel="icon" type="image/x-icon" href="../favicon.ico"></link> */}
         <link rel="icon" type="image/png" href="../icons8-motherboard-32.png"></link>

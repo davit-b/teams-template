@@ -11,7 +11,17 @@ export const handler: Handlers = {
     const url = new URL(req.url)
     const memberQuery = url.searchParams.get("name") || ""
     // TODO handle error on blank team name
-    const result: Team = JSON.parse(localStorage.getItem(ctx.params.team) ?? "")
+    const localValue = localStorage.getItem(ctx.params.team)
+    const result: Team = (localValue)
+      ? JSON.parse(localValue)
+      : {
+        id: crypto.randomUUID(),
+        name: ctx.params.team,
+        members: [],
+        eventHistory: [],
+        teams: [],
+        visiblity: true,
+      }
     return ctx.render({ result, memberQuery })
   },
 }
@@ -24,11 +34,6 @@ interface Data {
 export default function Page({ data, params }: PageProps<Data>) {
   const { result, memberQuery } = data
 
-  const handleInviteUser: InviteUserCallback = useCallback(() => {
-    console.log("handleInviteUser")
-  }, [])
-
-  // console.log(result)
   const teamName = params.team
   return (
     <div>
