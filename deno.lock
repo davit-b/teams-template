@@ -107,6 +107,7 @@
     "https://deno.land/x/ts_morph@16.0.0/ts_morph.d.ts": "38668b0e3780282a56a805425494490b0045d1928bd040c47a94095749dab8c3",
     "https://deno.land/x/ts_morph@16.0.0/ts_morph.js": "9fc0f3d6a3997c2df023fabc4e529d2117d214ffd4fd04247ca2f56c4e9cd470",
     "https://esm.sh/*preact-render-to-string@5.2.4": "6f28c6eb8269aeea826ae5786ade43dc56ab0cfb06ca22cfb953fc1a80910be1",
+    "https://esm.sh/fuzzysearch-ts@1.0.3": "fa30692a5bfa87339d34ae54bea17421b2ba9c55d5fda9f952f2cf7fc9d0ea50",
     "https://esm.sh/preact@10.11.0": "7a2563b2c3ec030072836f2d2746ffda575fbddd9bb573ec8f9ebdcdefabf4fa",
     "https://esm.sh/preact@10.11.0/hooks": "2b8ec155eb8b87501663f074acff1d55a9114fa7d88f0b39da06c940af1ff736",
     "https://esm.sh/preact@10.11.0/hooks/": "2b8ec155eb8b87501663f074acff1d55a9114fa7d88f0b39da06c940af1ff736",
@@ -118,6 +119,7 @@
     "https://esm.sh/twind@0.16.17": "f9dc7b94acc81710b03fa3958ad4ef36fdd4d62fe36a73ad352c360a7858df4f",
     "https://esm.sh/twind@0.16.17/sheets": "84b5e5daa66b6194284f194c8e3b83b80d20d2ddef4038add3dfa6db5b13a50b",
     "https://esm.sh/v113/csstype@3.1.1/index.d.ts": "1c29793071152b207c01ea1954e343be9a44d85234447b2b236acae9e709a383",
+    "https://esm.sh/v113/fuzzysearch-ts@1.0.3/deno/fuzzysearch-ts.mjs": "cc3bb55a807caf51f5c2ccc64ee5266dd8f07310d327e13e3538eb203e970a46",
     "https://esm.sh/v113/preact-render-to-string@5.2.4/X-ZS8q/deno/preact-render-to-string.mjs": "5ddbdb771669d535c808638acaa03e0866128c4e58462aa34de05a8997d6f635",
     "https://esm.sh/v113/preact-render-to-string@5.2.4/X-ZS8q/src/index.d.ts": "b1d73703252c8570fdf2952475805f5808ba3511fefbd93a3e7bd8406de7dcd0",
     "https://esm.sh/v113/preact@10.11.0/hooks/src/index.d.ts": "5c29febb624fc25d71cb0e125848c9b711e233337a08f7eacfade38fd4c14cc3",
@@ -130,5 +132,44 @@
     "https://esm.sh/v113/twind@0.16.17/deno/twind.mjs": "5c29f738ef054f05a0d6033563fde5d20db39f991ed59884aaae1f998d1402a3",
     "https://esm.sh/v113/twind@0.16.17/sheets/sheets.d.ts": "99d73e54a37ccb580a4b460fa05c709435536afde70a2072a4bb4672efa6f81b",
     "https://esm.sh/v113/twind@0.16.17/twind.d.ts": "dfcd37c02ead92e8d2f2619b6954c9faae75d8119b73d8d6e0c21f5275d783a3"
+  },
+  "npm": {
+    "specifiers": {
+      "fast-fuzzy": "fast-fuzzy@1.12.0"
+    },
+    "packages": {
+      "fast-fuzzy@1.12.0": {
+        "integrity": "sha512-sXxGgHS+ubYpsdLnvOvJ9w5GYYZrtL9mkosG3nfuD446ahvoWEsSKBP7ieGmWIKVLnaxRDgUJkZMdxRgA2Ni+Q==",
+        "dependencies": {
+          "graphemesplit": "graphemesplit@2.4.4"
+        }
+      },
+      "graphemesplit@2.4.4": {
+        "integrity": "sha512-lKrpp1mk1NH26USxC/Asw4OHbhSQf5XfrWZ+CDv/dFVvd1j17kFgMotdJvOesmHkbFX9P9sBfpH8VogxOWLg8w==",
+        "dependencies": {
+          "js-base64": "js-base64@3.7.5",
+          "unicode-trie": "unicode-trie@2.0.0"
+        }
+      },
+      "js-base64@3.7.5": {
+        "integrity": "sha512-3MEt5DTINKqfScXKfJFrRbxkrnk2AxPWGBL/ycjz4dK8iqiSJ06UxD8jh8xuh6p10TX4t2+7FsBYVxxQbMg+qA==",
+        "dependencies": {}
+      },
+      "pako@0.2.9": {
+        "integrity": "sha512-NUcwaKxUxWrZLpDG+z/xZaCgQITkA/Dv4V/T6bw7VON6l1Xz/VnrBqrYjZQ12TamKHzITTfOEIYUj48y2KXImA==",
+        "dependencies": {}
+      },
+      "tiny-inflate@1.0.3": {
+        "integrity": "sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==",
+        "dependencies": {}
+      },
+      "unicode-trie@2.0.0": {
+        "integrity": "sha512-x7bc76x0bm4prf1VLg79uhAzKw8DVboClSN5VxJuQ+LKDOVEW9CdH+VY7SP+vX7xCYQqzzgQpFqz15zeLvAtZQ==",
+        "dependencies": {
+          "pako": "pako@0.2.9",
+          "tiny-inflate": "tiny-inflate@1.0.3"
+        }
+      }
+    }
   }
 }

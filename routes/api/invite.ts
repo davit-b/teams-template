@@ -26,19 +26,25 @@ export const handler: Handlers = {
     })
 
     const localItem = localStorage.getItem(input.teamName)
-
     const result: Team = (localItem)
       ? JSON.parse(localItem)
       : createNewTeam(input.teamName)
 
-    const updatedTeam: Team = {
-      ...result,
-      members: [...result.members, newUser],
+    if (result.members.some((v) => v.githubId === input.githubId)) {
+      console.log("User already exists")
+      return new Response(JSON.stringify(result), {
+        status: 403,
+      })
+    } else {
+      const updatedTeam: Team = {
+        ...result,
+        members: [...result.members, newUser],
+      }
+      localStorage.setItem(input.teamName, JSON.stringify(updatedTeam))
+      return new Response(JSON.stringify(result), {
+        status: 200,
+      })
     }
-
-    localStorage.setItem(input.teamName, JSON.stringify(updatedTeam))
-
-    return new Response(JSON.stringify(newUser))
   },
 }
 

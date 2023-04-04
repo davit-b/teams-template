@@ -46,12 +46,14 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
     githubId: "",
     teamName,
   })
+  const [error, setError] = useState(false)
 
   // deno-lint-ignore ban-ts-comment
   // @ts-ignore
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, key: string) => {
     const element = e.target as HTMLInputElement
     setFields({ ...fields, [key]: element.value })
+    setError(false) // Reset error on new key strokes
   }, [fields])
 
   const handleSubmit = useCallback(async () => {
@@ -64,18 +66,27 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
         body: JSON.stringify(fields),
       })
 
-      if (!response.ok) {
-        throw new Error("Failed to submit form")
+      switch (response.status) {
+        case 200: {
+          // const data = await response.text()
+          // console.log("Form submitted successfully", data)
+          location.reload()
+          break
+        }
+        case 403: {
+          const duplicate = await response.text()
+          console.log("Error submitting form on duplicate", duplicate)
+          setError(true)
+          break
+        }
+        default: {
+          throw new Error("Failed to submit form")
+        }
       }
-
-      const data = await response.text()
-      console.log("Form submitted successfully", data)
     } catch (error) {
+      setError(true)
       console.error("Error submitting form:", error)
     }
-
-    // reload page
-    location.reload()
   }, [fields])
 
   return (
@@ -87,6 +98,7 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
         value={fields.githubId}
         onInput={(e) => handleChange(e, "githubId")}
       />
+      {error && <h1>ERROR DUPLICATE</h1>}
 
       <button onClick={handleSubmit}>Submit</button>
     </form>

@@ -8,6 +8,7 @@ export default function Home() {
       </Head>
       <div class="p-4 mx-auto max-w-screen-md">
         <a href="/crosshatch">Go to example team 'Crosshatch'</a>
+        <p>Or go to you're own blank team '/myTeam'</p>
       </div>
     </>
   )

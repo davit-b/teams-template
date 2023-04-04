@@ -1,10 +1,11 @@
 import { Head } from "$fresh/runtime.ts"
 import { Handlers, PageProps } from "$fresh/server.ts"
-import { useCallback } from "preact/hooks"
-import { InviteUserCallback, Team, User } from "../_model/_model.ts"
+import * as f from "npm:fast-fuzzy"
+import { Team, User } from "../_model/_model.ts"
 import ButtonModal from "../islands/ButtonModal.tsx"
 
 const bb = "border-2 border-black"
+const FUZZY_SEARCH_WEIGHT = 0.8
 
 export const handler: Handlers = {
   GET(req, ctx) {
@@ -22,7 +23,24 @@ export const handler: Handlers = {
         teams: [],
         visiblity: true,
       }
-    return ctx.render({ result, memberQuery })
+
+    // Fuzzy search via https://github.com/EthanRutherford/fast-fuzzy
+    if (memberQuery) {
+      return ctx.render({
+        result: {
+          ...result,
+          members: f.search(memberQuery, result.members, {
+            keySelector: (obj) => obj.name,
+            returnMatchData: false,
+            sortBy: f.sortKind.insertOrder,
+            threshold: FUZZY_SEARCH_WEIGHT,
+          }),
+        },
+        memberQuery,
+      })
+    } else {
+      return ctx.render({ result, memberQuery })
+    }
   },
 }
 
