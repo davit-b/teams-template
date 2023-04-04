@@ -1,5 +1,5 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts"
-import { load } from "https://deno.land/std/dotenv/mod.ts"
+import { load } from "https://deno.land/std@0.182.0/dotenv/mod.ts"
 import { AdminRole, NewUserInput, Team, User } from "../../_model/_model.ts"
 
 const env = await load()

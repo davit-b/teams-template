@@ -1,6 +1,6 @@
 import { Head } from "$fresh/runtime.ts"
 import { Handlers, PageProps } from "$fresh/server.ts"
-import { load } from "https://deno.land/std/dotenv/mod.ts"
+import { load } from "https://deno.land/std@0.182.0/dotenv/mod.ts"
 
 const bb = "border-2 border-black"
 

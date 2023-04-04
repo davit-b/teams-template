@@ -1,5 +1,5 @@
 import { useCallback, useState } from "preact/hooks"
-import { InviteUserCallback, NewUserInput } from "../_model/_model.ts"
+import { NewUserInput } from "../_model/_model.ts"
 
 export default function ButtonModal({ teamId, teamName }: { teamId: string; teamName: string }) {
   const [open, setOpen] = useState(false)
@@ -47,6 +47,7 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
     teamName,
   })
 
+  // deno-lint-ignore ban-ts-comment
   // @ts-ignore
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, key: string) => {
     const element = e.target as HTMLInputElement
