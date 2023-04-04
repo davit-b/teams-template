@@ -83,9 +83,9 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
           throw new Error("Failed to submit form")
         }
       }
-    } catch (error) {
+    } catch (e) {
       setError(true)
-      console.error("Error submitting form:", error)
+      console.error("Error submitting form:", e)
     }
   }, [fields])
 

@@ -3,6 +3,7 @@ import { Handlers, PageProps } from "$fresh/server.ts"
 import * as f from "npm:fast-fuzzy"
 import { Team, User } from "../_model/_model.ts"
 import ButtonModal from "../islands/ButtonModal.tsx"
+import RemoveButton from "../islands/RemoveButton.tsx"
 
 const bb = "border-2 border-black"
 const FUZZY_SEARCH_WEIGHT = 0.8
@@ -11,7 +12,6 @@ export const handler: Handlers = {
   GET(req, ctx) {
     const url = new URL(req.url)
     const memberQuery = url.searchParams.get("name") || ""
-    // TODO handle error on blank team name
     const localValue = localStorage.getItem(ctx.params.team)
     const result: Team = (localValue)
       ? JSON.parse(localValue)
@@ -100,6 +100,7 @@ export default function Page({ data, params }: PageProps<Data>) {
                           <img src={user.avatarUrl} width={40} height={40} />
                           <h1 class="text-3xl">{user.name}</h1>
                           <p class="px-2 flex items-center text-sm">login: {user.githubId}</p>
+                          <RemoveButton githubId={user.githubId} teamName={teamName} />
                         </li>
                       )
                     })}

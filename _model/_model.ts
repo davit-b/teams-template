@@ -59,3 +59,8 @@ export interface InviteUserAction {
 }
 
 export type InviteUserCallback = () => void
+
+export interface RemoveInput {
+  githubId: string
+  teamName: string
+}
