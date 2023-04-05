@@ -1,13 +1,15 @@
 import { Head } from "$fresh/runtime.ts"
 import { Handlers, PageProps } from "$fresh/server.ts"
-import * as f from "npm:fast-fuzzy"
+// import * as f from "https://esm.sh/fast-fuzzy@1.12.0"
 import { Team, User } from "../_model/_model.ts"
 import { teamKey } from "../_utility/keyUtils.ts"
 import ButtonModal from "../islands/ButtonModal.tsx"
 import RemoveButton from "../islands/RemoveButton.tsx"
+// @deno-types="https://deno.land/x/fuse@v6.4.1/dist/fuse.d.ts"
+import Fuse from "https://deno.land/x/fuse@v6.4.1/dist/fuse.esm.js"
 
 const bb = "border-2 border-black"
-const FUZZY_SEARCH_WEIGHT = 0.8
+// const FUZZY_SEARCH_WEIGHT = 0.8
 
 export const handler: Handlers = {
   GET(req, ctx) {
@@ -24,18 +26,14 @@ export const handler: Handlers = {
         teams: [],
         visiblity: true,
       }
+    const fuse = new Fuse(result.members, { keys: ["githubId"] })
 
     // Fuzzy search via https://github.com/EthanRutherford/fast-fuzzy
     if (memberQuery) {
       return ctx.render({
         result: {
           ...result,
-          members: f.search(memberQuery, result.members, {
-            keySelector: (obj) => obj.name,
-            returnMatchData: false,
-            sortBy: f.sortKind.insertOrder,
-            threshold: FUZZY_SEARCH_WEIGHT,
-          }),
+          members: fuse.search(memberQuery).map((e) => e.item),
         },
         memberQuery,
       })
