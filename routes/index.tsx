@@ -1,6 +1,5 @@
 import { Head } from "$fresh/runtime.ts"
 import { useMemo } from "https://esm.sh/preact@10.11.0/hooks"
-import { removePrefix } from "../_utility/keyUtils.ts"
 import LinkTo from "../components/LinkTo.tsx"
 
 export default function Home() {
@@ -15,22 +14,7 @@ export default function Home() {
         <a href="/crosshatch">Go to example team 'Crosshatch'</a>
         <br>-</br>
         <ul class="text-blue-500">
-          {keyList.map((key) => {
-            if (key.startsWith("user_")) {
-              console.log(key)
-              return (
-                <li>
-                  <a href={`/user/${removePrefix(key, "user_")}`}>{key}</a>
-                </li>
-              )
-            } else {
-              return (
-                <li>
-                  <a href={`/${removePrefix(key, "team_")}`}>{key}</a>
-                </li>
-              )
-            }
-          })}
+          {keyList.map((key) => <LinkTo key={key} data={key} />)}
         </ul>
       </div>
     </>
