@@ -68,8 +68,6 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
 
       switch (response.status) {
         case 200: {
-          // const data = await response.text()
-          // console.log("Form submitted successfully", data)
           location.reload()
           break
         }
