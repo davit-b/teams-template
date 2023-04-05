@@ -1,17 +1,17 @@
 import { Handlers, PageProps } from "$fresh/server.ts"
 import { User } from "../../_model/_model.ts"
 import { userKey } from "../../_utility/keyUtils.ts"
+import { ddbGetUser } from "../../_utility/storage.ts"
 
 interface Data {
   user: User
 }
 
 export const handler: Handlers = {
-  GET(_, ctx) {
-    const local = localStorage.getItem(userKey(ctx.params.user))
-    const user = (local) ? JSON.parse(local) : null
-    if (user) {
-      return ctx.render({ user })
+  async GET(_, ctx) {
+    const ddbResult = await ddbGetUser(userKey(ctx.params.user))
+    if (ddbResult.Item) {
+      return ctx.render({ user: ddbResult.Item })
     }
     return ctx.render()
   },

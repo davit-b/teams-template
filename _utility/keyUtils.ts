@@ -2,11 +2,11 @@ const TEAM_PREFIX = "team_"
 const USER_PREFIX = "user_"
 
 export function teamKey(team: string) {
-  return `${TEAM_PREFIX}${team}`
+  return `${team}`
 }
 
 export function userKey(user: string) {
-  return `${USER_PREFIX}${user}`
+  return `${user}`
 }
 
 export function removePrefix(s: string, prefix: string) {

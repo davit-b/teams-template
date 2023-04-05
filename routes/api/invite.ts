@@ -1,19 +1,21 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts"
-import { load } from "https://deno.land/std@0.182.0/dotenv/mod.ts"
 import { AdminRole, NewUserInput, Team, User } from "../../_model/_model.ts"
 import { teamKey, userKey } from "../../_utility/keyUtils.ts"
+import { ddbGetTeam, ddbGetUser, ddbSetItem } from "../../_utility/storage.ts"
+import "https://deno.land/x/dotenv/load.ts"
 
-const env = await load()
-const gh_token = env["gh_token"]
+const GH_TOKEN = Deno.env.get("gh_token")!
 
-async function getOrCreateUser(githubId: string, teamName: string): Promise<User> {
-  const localResult = localStorage.getItem(userKey(githubId))
-  if (localResult) {
-    return JSON.parse(localResult)
+async function getOrCreateUser(githubId: string): Promise<User> {
+  const ddbResult = await ddbGetUser(userKey(githubId))
+  console.log("getOrCreateUser", ddbResult)
+  if (ddbResult.Item) {
+    console.log("ddbResult.Item", ddbResult.Item)
+    return ddbResult.Item
   } else {
     const newUser: User = await fetch(`https://api.github.com/users/${githubId}`, {
       headers: {
-        Authorization: `token ${gh_token}`,
+        Authorization: `token ${GH_TOKEN}`,
       },
     }).then((v) => v.json()).then((user) => {
       return {
@@ -27,7 +29,7 @@ async function getOrCreateUser(githubId: string, teamName: string): Promise<User
         eventHistory: [],
       }
     })
-    localStorage.setItem(userKey(githubId), JSON.stringify(newUser))
+    ddbSetItem(userKey(githubId), newUser)
 
     return newUser
   }
@@ -42,21 +44,18 @@ function createNewTeam(teamName: string) {
     teams: [],
     visiblity: true,
   }
-  localStorage.setItem(
-    teamKey(teamName),
-    JSON.stringify(newTeam),
-  )
+  ddbSetItem(teamKey(teamName), newTeam)
   return newTeam
 }
 
 export const handler: Handlers = {
   async POST(req: Request, _ctx: HandlerContext) {
     const input: NewUserInput = await req?.json()
-    const newUser = await getOrCreateUser(input.githubId, input.teamName)
+    const newUser = await getOrCreateUser(input.githubId)
 
-    const localItem = localStorage.getItem(teamKey(input.teamName))
-    const result: Team = (localItem)
-      ? JSON.parse(localItem)
+    const ddbItem = await ddbGetTeam(teamKey(input.teamName))
+    const result: Team = (ddbItem.Item)
+      ? ddbItem.Item
       : createNewTeam(input.teamName)
 
     try {
@@ -71,7 +70,7 @@ export const handler: Handlers = {
           ...result,
           members: [...result.members, newUser],
         }
-        localStorage.setItem(teamKey(input.teamName), JSON.stringify(updatedTeam))
+        ddbSetItem(teamKey(input.teamName), updatedTeam)
 
         // Update user's teamList
         addTeamToUser(input.teamName, input.githubId)
@@ -89,15 +88,15 @@ export const handler: Handlers = {
   },
 }
 
-function addTeamToUser(teamName: string, githubId: string) {
-  const localResult = localStorage.getItem(userKey(githubId))
-  if (localResult) {
-    const user: User = JSON.parse(localResult)
+async function addTeamToUser(teamName: string, githubId: string) {
+  const ddbResult = await ddbGetUser(userKey(githubId))
+  if (ddbResult.Item) {
+    const user: User = ddbResult.Item
     const updatedUser = {
       ...user,
       teams: [...user.teams, teamName],
     }
-    localStorage.setItem(userKey(githubId), JSON.stringify(updatedUser))
+    ddbSetItem(userKey(githubId), updatedUser)
   } else {
     throw new Error("Failure adding team to user")
   }
