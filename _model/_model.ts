@@ -11,13 +11,13 @@ export type Role = AdminRole | UserRole | MaintainerRole
 // Admin can add/remove anyone else, including other admins.
 
 export type TeamId = string
+export type TeamName = string
 
 export interface Team {
   id: TeamId
-  name: string
+  name: TeamName
   members: User[]
   eventHistory: Event[]
-  teams: Team[]
   visiblity: boolean
 }
 
@@ -38,7 +38,7 @@ export interface User {
   name: string
   githubId: string
   avatarUrl: string
-  teams: TeamId[]
+  teams: TeamName[]
   role: Role
   membershipStatus: "Invited" | "Accepted"
   eventHistory: Event[]
@@ -54,7 +54,7 @@ export interface NewUserInput {
 
 export interface InviteUserAction {
   newUser: NewUserInput
-  toTeam: SafeOmit<Team, "eventHistory" | "members" | "teams" | "visiblity">
+  toTeam: SafeOmit<Team, "eventHistory" | "members" | "visiblity">
   inviter: SafeOmit<User, "eventHistory" | "membershipStatus" | "teams" | "avatarUrl" | "name">
 }
 

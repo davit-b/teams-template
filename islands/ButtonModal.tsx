@@ -75,7 +75,7 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
         }
         case 403: {
           const duplicate = await response.text()
-          console.log("Error submitting form on duplicate", duplicate)
+          console.error("Error submitting form on duplicate", duplicate)
           setError(true)
           break
         }

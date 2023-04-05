@@ -2,6 +2,7 @@ import { Head } from "$fresh/runtime.ts"
 import { Handlers, PageProps } from "$fresh/server.ts"
 import * as f from "npm:fast-fuzzy"
 import { Team, User } from "../_model/_model.ts"
+import { teamKey } from "../_utility/keyUtils.ts"
 import ButtonModal from "../islands/ButtonModal.tsx"
 import RemoveButton from "../islands/RemoveButton.tsx"
 
@@ -12,7 +13,7 @@ export const handler: Handlers = {
   GET(req, ctx) {
     const url = new URL(req.url)
     const memberQuery = url.searchParams.get("name") || ""
-    const localValue = localStorage.getItem(ctx.params.team)
+    const localValue = localStorage.getItem(teamKey(ctx.params.team))
     const result: Team = (localValue)
       ? JSON.parse(localValue)
       : {
@@ -98,7 +99,7 @@ export default function Page({ data, params }: PageProps<Data>) {
                           key={user.githubId}
                         >
                           <img src={user.avatarUrl} width={40} height={40} />
-                          <h1 class="text-3xl">{user.name}</h1>
+                          <a class="text-3xl" href={`/user/${user.githubId}`}>{user.name}</a>
                           <p class="px-2 flex items-center text-sm">login: {user.githubId}</p>
                           <RemoveButton githubId={user.githubId} teamName={teamName} />
                         </li>

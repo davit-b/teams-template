@@ -8,6 +8,7 @@ import * as $1 from "./routes/_app.tsx";
 import * as $2 from "./routes/api/invite.ts";
 import * as $3 from "./routes/api/remove.ts";
 import * as $4 from "./routes/index.tsx";
+import * as $5 from "./routes/user/[user].tsx";
 import * as $$0 from "./islands/ButtonModal.tsx";
 import * as $$1 from "./islands/RemoveButton.tsx";
 
@@ -18,6 +19,7 @@ const manifest = {
     "./routes/api/invite.ts": $2,
     "./routes/api/remove.ts": $3,
     "./routes/index.tsx": $4,
+    "./routes/user/[user].tsx": $5,
   },
   islands: {
     "./islands/ButtonModal.tsx": $$0,
