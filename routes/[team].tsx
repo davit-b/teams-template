@@ -16,7 +16,6 @@ export const handler: Handlers = {
   async GET(req, ctx) {
     const url = new URL(req.url)
     const memberQuery = url.searchParams.get("name") || ""
-    // const localValue = localStorage.getItem(teamKey(ctx.params.team))
     const ddbTeam = await ddbGetTeam(teamKey(ctx.params.team))
     const result: Team = (ddbTeam.Item)
       ? ddbTeam.Item

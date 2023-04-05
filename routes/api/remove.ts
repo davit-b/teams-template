@@ -1,5 +1,5 @@
 import { Handlers } from "https://deno.land/x/fresh@1.1.4/server.ts"
-import { RemoveInput, Team, User } from "../../_model/_model.ts"
+import { RemoveInput } from "../../_model/_model.ts"
 import { teamKey, userKey } from "../../_utility/keyUtils.ts"
 import { ddbGetTeam, ddbGetUser, ddbSetItem } from "../../_utility/storage.ts"
 
