@@ -2,15 +2,13 @@ import { HandlerContext, Handlers } from "$fresh/server.ts"
 import { AdminRole, NewUserInput, Team, User } from "../../_model/_model.ts"
 import { teamKey, userKey } from "../../_utility/keyUtils.ts"
 import { ddbGetTeam, ddbGetUser, ddbSetItem } from "../../_utility/storage.ts"
-import "https://deno.land/x/dotenv/load.ts"
+import "https://deno.land/x/dotenv@v3.2.2/load.ts"
 
 const GH_TOKEN = Deno.env.get("gh_token")!
 
 async function getOrCreateUser(githubId: string): Promise<User> {
   const ddbResult = await ddbGetUser(userKey(githubId))
-  // console.log("getOrCreateUser", ddbResult)
   if (ddbResult.Item) {
-    // console.log("ddbResult.Item", ddbResult.Item)
     return ddbResult.Item
   } else {
     const newUser: User = await fetch(`https://api.github.com/users/${githubId}`, {

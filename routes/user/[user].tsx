@@ -22,18 +22,16 @@ export default function Page({ data, params }: PageProps<Data>) {
   return (
     <div class="flex w-screen h-screen justify-center items-center">
       <div class="flex flex-col w-2/3 h-2/3 justify-center items-center">
-        <img src={user.avatarUrl} width={200} height={200} />
-        <span>github:&nbsp;{user.githubId}</span>
-        <span>id:&nbsp;{user.id}</span>
-        <span>name:&nbsp;{user.name}</span>
-        <div class="flex">
-          teams:&nbsp;{user.teams.map((team) => <a class="" href={`/${team}`}>{team}&nbsp;&nbsp;
-          </a>)}
-        </div>
-        <span>{user.role}</span>
-        <span>{user.membershipStatus}</span>
-        <div>
-          EventHistory[]
+        <img class="w-96 h-96 rounded-2xl" src={user.avatarUrl} />
+        <a class="prose prose-2xl link link-primary" href={`https://github.com/${user.githubId}`}>
+          {user.githubId}
+        </a>
+        <h2 class="prose prose-2xl">{user.name}</h2>
+        <div class="flex items-start noprose border-t-2">
+          <h3 class="prose prose-xl">Teams: &nbsp;&nbsp;&nbsp;&nbsp;</h3>
+          <div class="flex flex-col items-start w-28 pt-2">
+            {user.teams.map((team) => <a class="link link-primary" href={`/${team}`}>{team}</a>)}
+          </div>
         </div>
       </div>
     </div>
