@@ -9,9 +9,8 @@ import * as $2 from "./routes/api/invite.ts";
 import * as $3 from "./routes/api/remove.ts";
 import * as $4 from "./routes/index.tsx";
 import * as $5 from "./routes/user/[user].tsx";
-import * as $$0 from "./islands/ButtonModal.tsx";
-import * as $$1 from "./islands/ExpModal.tsx";
-import * as $$2 from "./islands/RemoveButton.tsx";
+import * as $$0 from "./islands/InviteModal.tsx";
+import * as $$1 from "./islands/RemoveButton.tsx";
 
 const manifest = {
   routes: {
@@ -23,9 +22,8 @@ const manifest = {
     "./routes/user/[user].tsx": $5,
   },
   islands: {
-    "./islands/ButtonModal.tsx": $$0,
-    "./islands/ExpModal.tsx": $$1,
-    "./islands/RemoveButton.tsx": $$2,
+    "./islands/InviteModal.tsx": $$0,
+    "./islands/RemoveButton.tsx": $$1,
   },
   baseUrl: import.meta.url,
   config,

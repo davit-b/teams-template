@@ -1,6 +1,5 @@
 import { TeamId, TeamName } from "../_model/_model.ts"
-import ButtonModal from "../islands/ButtonModal.tsx"
-import ExpModal from "../islands/ExpModal.tsx"
+import InviteModal from "../islands/InviteModal.tsx"
 
 interface Props {
   teamId: TeamId
@@ -22,8 +21,7 @@ export default function ActionBox({ teamId, teamName, memberQuery }: Props) {
         </input>
         <button type="submit" />
       </form>
-      {/* <ButtonModal teamId={teamId} teamName={teamName} /> */}
-      <ExpModal teamId={teamId} teamName={teamName} />
+      <InviteModal teamId={teamId} teamName={teamName} />
       <label htmlFor="my-modal-3" className="btn btn-primary">open modal</label>
     </div>
   )

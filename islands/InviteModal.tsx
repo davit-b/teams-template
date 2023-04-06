@@ -1,7 +1,7 @@
 import { useCallback, useState } from "preact/hooks"
 import { NewUserInput } from "../_model/_model.ts"
 
-export default function ExpModal({ teamId, teamName }: { teamId: string; teamName: string }) {
+export default function InviteModal({ teamId, teamName }: { teamId: string; teamName: string }) {
   return (
     <div>
       <input type="checkbox" id="my-modal-3" className="modal-toggle" />
@@ -30,20 +30,25 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
     teamName,
   })
   const [error, setError] = useState(false)
+  const [invalidGithubError, setInvalidGithubError] = useState(false)
+  const [duplicateError, setDuplicateError] = useState(false)
 
   // deno-lint-ignore ban-ts-comment
   // @ts-ignore
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, key: string) => {
     const element = e.target as HTMLInputElement
-    console.log("val", element.value)
     setFields({ ...fields, [key]: element.value })
-    setError(false) // Reset error on new key strokes
+
+    // Reset error on new key strokes
+    setError(false)
+    setInvalidGithubError(false)
+    setDuplicateError(false)
   }, [fields])
 
   const handleSubmit = useCallback(async (e: Event) => {
-    console.log(fields)
     e.preventDefault()
-    // e.stopPropagation()
+    if (fields.githubId === "") return
+
     try {
       const response = await fetch("/api/invite", {
         method: "POST",
@@ -58,10 +63,15 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
           location.reload()
           break
         }
-        case 403: {
+        case 400: {
           const duplicate = await response.text()
           console.error("Error submitting form on duplicate", duplicate)
-          setError(true)
+          setDuplicateError(true)
+          break
+        }
+        case 406: {
+          console.error("Github ID user does not exist", fields.githubId)
+          setInvalidGithubError(true)
           break
         }
         default: {
@@ -75,7 +85,7 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
   }, [fields])
 
   return (
-    <form>
+    <form class="flex justify-between items-center ">
       <input
         type="text"
         name="githubId"
@@ -83,7 +93,9 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
         value={fields.githubId}
         onInput={(e) => handleChange(e, "githubId")}
       />
-      {error && <h1>ERROR DUPLICATE</h1>}
+      {error && <p class="text-error-content">Error Submitting Form</p>}
+      {invalidGithubError && <p class="text-error-content">Invalid GithubID</p>}
+      {duplicateError && <p class="text-error-content">User already added</p>}
 
       <button class="btn btn-primary" onClick={handleSubmit}>Submit</button>
     </form>

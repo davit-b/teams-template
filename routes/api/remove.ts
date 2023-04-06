@@ -8,8 +8,8 @@ export const handler: Handlers = {
     const input: RemoveInput = await req?.json()
 
     try {
-      removeFromTeam(input.teamName, input.githubId)
-      updateUserFields(input.teamName, input.githubId)
+      await removeFromTeam(input.teamName, input.githubId)
+      await updateUserFields(input.teamName, input.githubId)
 
       return new Response(null, {
         status: 200,
@@ -33,7 +33,7 @@ async function removeFromTeam(teamName: string, githubId: string) {
       ...item.Item,
       members: decreasedMembers,
     }
-    ddbSetItem(teamKey(teamName), updatedTeam)
+    await ddbSetItem(teamKey(teamName), updatedTeam)
   } else {
     throw new Error("Team does not exist in local storage. This should not happen")
   }
@@ -49,7 +49,7 @@ async function updateUserFields(teamName: string, githubId: string) {
       ...user,
       teams: user.teams.filter((n) => n !== teamName),
     }
-    ddbSetItem(userKey(githubId), updatedUser)
+    await ddbSetItem(userKey(githubId), updatedUser)
   } else {
     throw new Error("User does not exist in local storage. Critical error")
   }
