@@ -8,9 +8,9 @@ const GH_TOKEN = Deno.env.get("gh_token")!
 
 async function getOrCreateUser(githubId: string): Promise<User> {
   const ddbResult = await ddbGetUser(userKey(githubId))
-  console.log("getOrCreateUser", ddbResult)
+  // console.log("getOrCreateUser", ddbResult)
   if (ddbResult.Item) {
-    console.log("ddbResult.Item", ddbResult.Item)
+    // console.log("ddbResult.Item", ddbResult.Item)
     return ddbResult.Item
   } else {
     const newUser: User = await fetch(`https://api.github.com/users/${githubId}`, {

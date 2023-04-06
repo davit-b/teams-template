@@ -22,7 +22,7 @@ export default function App({ Component }: AppProps) {
         /> */
         }
       </Head>
-      <ExpModal />
+
       <body class="">
         <Component />
       </body>

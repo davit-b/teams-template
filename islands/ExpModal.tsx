@@ -1,9 +1,7 @@
 import { useCallback, useState } from "preact/hooks"
 import { NewUserInput } from "../_model/_model.ts"
 
-export default function ExpModal() {
-  const [open, setOpen] = useState(false)
-
+export default function ExpModal({ teamId, teamName }: { teamId: string; teamName: string }) {
   return (
     <div>
       <input type="checkbox" id="my-modal-3" className="modal-toggle" />
@@ -12,11 +10,12 @@ export default function ExpModal() {
           <label htmlFor="my-modal-3" className="absolute btn btn-sm btn-circle right-2 top-2">
             ✕
           </label>
-          <h3 className="text-lg font-bold">Congratulations random Internet user!</h3>
+          <h3 className="text-lg font-bold">Add a github username</h3>
           <p className="py-4">
             You've been selected for a chance to get one year of subscription to use Wikipedia for
             free!
           </p>
+          <InviteUser teamId={teamId} teamName={teamName} />
         </div>
       </div>
     </div>
@@ -35,11 +34,15 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
   // @ts-ignore
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, key: string) => {
     const element = e.target as HTMLInputElement
+    console.log("val", element.value)
     setFields({ ...fields, [key]: element.value })
     setError(false) // Reset error on new key strokes
   }, [fields])
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(async (e: Event) => {
+    console.log(fields)
+    e.preventDefault()
+    // e.stopPropagation()
     try {
       const response = await fetch("/api/invite", {
         method: "POST",

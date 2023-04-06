@@ -5,6 +5,7 @@ import { Team, User } from "../_model/_model.ts"
 import { teamKey } from "../_utility/keyUtils.ts"
 import { ddbGetTeam } from "../_utility/storage.ts"
 import ButtonModal from "../islands/ButtonModal.tsx"
+import ExpModal from "../islands/ExpModal.tsx"
 import RemoveButton from "../islands/RemoveButton.tsx"
 // @deno-types="https://deno.land/x/fuse@v6.4.1/dist/fuse.d.ts"
 import Fuse from "https://deno.land/x/fuse@v6.4.1/dist/fuse.esm.js"
@@ -89,6 +90,7 @@ export default function Page({ data, params }: PageProps<Data>) {
                   </form>
                   <ButtonModal teamId={result.id} teamName={teamName} />
                   <label htmlFor="my-modal-3" className="btn">open modal</label>
+                  <ExpModal teamId={result.id} teamName={teamName} />
                 </div>
                 <div class="h-full w-full flex items-center">
                   <ul>
