@@ -1,18 +1,22 @@
-# fresh project
+![screenshot](_docs/demo.png)
 
-A note: This project uses
+---
 
-- DynamoDB for a backend.
-- typesafe-dynamo - for creating a typed client to the dynamoDB table
+## Notes
+
+- **Deno Fresh**
+- **DynamoDB** for a backend.
+- **typesafe-dynamo** - for creating a typed client to the dynamoDB table
   - For simplicity sake, the primary keys on the tables are set to User: `name`
     and Team: `githubId`. You can change however you like.
-- tailwindcli - for generating a `/static/tailwind.css` file to deploy
+- **tailwindcli** - for generating a `/static/tailwind.css` file to deploy
   - Twind is removed from this package. This is because twind doesn't work with
     DaisyUI's plugins. Twind has it's own plugins and is not compatible with the
     tailwind ecosystem.
-- DaisyUI and Tailwind Typography plugins - these are used with tailwind.
+- **DaisyUI** and **Tailwind Typography** plugins - these are used with
+  tailwind.
 
-Requirements
+#### Requirements
 
 - A Github API Key (optional: you will get throttled)
 - AWS Access and Secret Key
@@ -22,7 +26,7 @@ Requirements
   - A table TableNameUser = `construct_user_table` and primary key of
     UserTablePK = `githubId`
 
-### One-time operations!
+#### One-time operations!
 
 1. Download the TailwindCLI into this directory by running
    `download-tailwind-macos.sh`
@@ -38,7 +42,7 @@ export AWS_SECRET_ACCESS_KEY="BLAHBLAHBLAH"
 
 afterwards...
 
-### Usage
+#### Usage
 
 1. Run `deno task start`.
 
