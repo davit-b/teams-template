@@ -23,6 +23,10 @@ import { Team, User } from "../_model/_model.ts"
 import "https://deno.land/x/dotenv@v3.2.2/load.ts"
 
 export const Region = "us-east-1"
+export const TableNameTeam = "construct_team_table"
+export const TableNameUser = "construct_user_table"
+const TeamTablePK = "name"
+const UserTablePK = "githubId"
 
 export const teamClient = DynamoDBDocument.from(
   new DynamoDBClient({
@@ -32,14 +36,14 @@ export const teamClient = DynamoDBDocument.from(
       secretAccessKey: Deno.env.get("AWS_SECRET_ACCESS_KEY")!,
     },
   }),
-) as unknown as TypeSafeDocumentClientV3<Team, "id">
+) as unknown as TypeSafeDocumentClientV3<Team, typeof TeamTablePK>
 
 export const PutTeam = TypeSafePutDocumentCommand<Team>()
-export const GetTeam = TypeSafeGetDocumentCommand<Team, "name", undefined>()
-export const DeleteTeam = TypeSafeDeleteDocumentCommand<Team, "id", undefined>()
+export const GetTeam = TypeSafeGetDocumentCommand<Team, typeof TeamTablePK, undefined>()
+export const DeleteTeam = TypeSafeDeleteDocumentCommand<Team, typeof TeamTablePK, undefined>()
 export const QueryTeam = TypeSafeQueryDocumentCommand<Team>()
 export const ScanTeam = TypeSafeScanDocumentCommand<Team>()
-export const UpdateTeam = TypeSafeUpdateDocumentCommand<Team, "id", undefined>()
+export const UpdateTeam = TypeSafeUpdateDocumentCommand<Team, typeof TeamTablePK, undefined>()
 
 export const userClient = DynamoDBDocument.from(
   new DynamoDBClient({
@@ -49,10 +53,7 @@ export const userClient = DynamoDBDocument.from(
       secretAccessKey: Deno.env.get("AWS_SECRET_ACCESS_KEY")!,
     },
   }),
-) as unknown as TypeSafeDocumentClientV3<User, "id">
+) as unknown as TypeSafeDocumentClientV3<User, typeof UserTablePK>
 
 export const PutUser = TypeSafePutDocumentCommand<User>()
-export const GetUser = TypeSafeGetDocumentCommand<User, "githubId", undefined>()
-
-export const TableNameTeam = "construct_team_table"
-export const TableNameUser = "construct_user_table"
+export const GetUser = TypeSafeGetDocumentCommand<User, typeof UserTablePK, undefined>()

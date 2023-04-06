@@ -20,7 +20,7 @@ export default function ActionBox({ teamId, teamName, memberQuery }: ActionBoxPr
         <button type="submit" />
       </form>
       <InviteModal teamId={teamId} teamName={teamName} />
-      <label htmlFor="my-modal-3" className="btn btn-primary">open modal</label>
+      <label htmlFor="my-modal-3" className="btn btn-primary">Invite New Member</label>
     </div>
   )
 }

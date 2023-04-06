@@ -4,22 +4,26 @@
 
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/[team].tsx";
-import * as $1 from "./routes/_app.tsx";
-import * as $2 from "./routes/api/invite.ts";
-import * as $3 from "./routes/api/remove.ts";
-import * as $4 from "./routes/index.tsx";
-import * as $5 from "./routes/user/[user].tsx";
+import * as $1 from "./routes/_404.tsx";
+import * as $2 from "./routes/_500.tsx";
+import * as $3 from "./routes/_app.tsx";
+import * as $4 from "./routes/api/invite.ts";
+import * as $5 from "./routes/api/remove.ts";
+import * as $6 from "./routes/index.tsx";
+import * as $7 from "./routes/user/[user].tsx";
 import * as $$0 from "./islands/InviteModal.tsx";
 import * as $$1 from "./islands/RemoveButton.tsx";
 
 const manifest = {
   routes: {
     "./routes/[team].tsx": $0,
-    "./routes/_app.tsx": $1,
-    "./routes/api/invite.ts": $2,
-    "./routes/api/remove.ts": $3,
-    "./routes/index.tsx": $4,
-    "./routes/user/[user].tsx": $5,
+    "./routes/_404.tsx": $1,
+    "./routes/_500.tsx": $2,
+    "./routes/_app.tsx": $3,
+    "./routes/api/invite.ts": $4,
+    "./routes/api/remove.ts": $5,
+    "./routes/index.tsx": $6,
+    "./routes/user/[user].tsx": $7,
   },
   islands: {
     "./islands/InviteModal.tsx": $$0,

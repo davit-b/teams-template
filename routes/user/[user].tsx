@@ -6,10 +6,10 @@ import { ddbGetUser } from "../../_utility/storage.ts"
 export const handler: Handlers = {
   async GET(_, ctx) {
     const ddbResult = await ddbGetUser(userKey(ctx.params.user))
-    if (ddbResult.Item) {
-      return ctx.render({ user: ddbResult.Item })
+    if (!ddbResult.Item) {
+      return ctx.renderNotFound()
     }
-    return ctx.render()
+    return ctx.render({ user: ddbResult.Item })
   },
 }
 
