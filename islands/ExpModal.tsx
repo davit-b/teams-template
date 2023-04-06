@@ -10,10 +10,11 @@ export default function ExpModal({ teamId, teamName }: { teamId: string; teamNam
           <label htmlFor="my-modal-3" className="absolute btn btn-sm btn-circle right-2 top-2">
             ✕
           </label>
-          <h3 className="text-lg font-bold">Add a github username</h3>
+          <h3 className="text-lg font-bold">Add a member</h3>
           <p className="py-4">
-            You've been selected for a chance to get one year of subscription to use Wikipedia for
-            free!
+            Here you can add a member to this team by typing in their{" "}
+            <span class="font-bold">exact github Id.</span>{" "}
+            If they are already in the team, you will be unable to add them.
           </p>
           <InviteUser teamId={teamId} teamName={teamName} />
         </div>
@@ -84,7 +85,7 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
       />
       {error && <h1>ERROR DUPLICATE</h1>}
 
-      <button onClick={handleSubmit}>Submit</button>
+      <button class="btn btn-primary" onClick={handleSubmit}>Submit</button>
     </form>
   )
 }

@@ -31,10 +31,8 @@ export default function RemoveButton({ githubId, teamName }: RemoveInput) {
   }, [githubId])
 
   return (
-    <>
-      <button onClick={handleRemove} class="btn btn-primary">
-        Remove {githubId}
-      </button>
-    </>
+    <button onClick={handleRemove} class="btn btn-secondary btn-sm btn-square">
+      x
+    </button>
   )
 }
