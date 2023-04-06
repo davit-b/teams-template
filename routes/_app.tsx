@@ -1,4 +1,3 @@
-// routes/_app.tsx
 import { Head } from "$fresh/runtime.ts"
 import { AppProps } from "$fresh/src/server/types.ts"
 

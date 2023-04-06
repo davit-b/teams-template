@@ -18,6 +18,7 @@ export const handler: Handlers = {
     const result: Team = (ddbTeam.Item)
       ? ddbTeam.Item
       : {
+        type: "team",
         id: crypto.randomUUID(),
         name: ctx.params.team,
         members: [],

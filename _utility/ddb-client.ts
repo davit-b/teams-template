@@ -24,7 +24,7 @@ import "https://deno.land/x/dotenv@v3.2.2/load.ts"
 
 export const Region = "us-east-1"
 
-export const team_client = DynamoDBDocument.from(
+export const teamClient = DynamoDBDocument.from(
   new DynamoDBClient({
     region: Region,
     credentials: {
@@ -41,7 +41,7 @@ export const QueryTeam = TypeSafeQueryDocumentCommand<Team>()
 export const ScanTeam = TypeSafeScanDocumentCommand<Team>()
 export const UpdateTeam = TypeSafeUpdateDocumentCommand<Team, "id", undefined>()
 
-export const user_client = DynamoDBDocument.from(
+export const userClient = DynamoDBDocument.from(
   new DynamoDBClient({
     region: Region,
     credentials: {

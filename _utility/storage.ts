@@ -6,49 +6,32 @@ import {
   PutUser,
   TableNameTeam,
   TableNameUser,
-  team_client,
-  user_client,
+  teamClient,
+  userClient,
 } from "./ddb-client.ts"
 
-function isUser(item: User | Team): item is User {
-  return (item as User).githubId !== undefined
-}
-function isTeam(item: User | Team): item is Team {
-  return (item as Team).members !== undefined
-}
-
 export function ddbSetItem(_key: string, item: User | Team) {
-  if (isUser(item)) {
-    return user_client.send(
+  if (item.type === "user") {
+    return userClient.send(
       new PutUser({ TableName: TableNameUser, Item: item }),
     )
-  } else if (isTeam(item)) {
-    return user_client.send(
+  } else {
+    return teamClient.send(
       new PutTeam(
         { TableName: TableNameTeam, Item: item },
       ),
     )
-  } else {
-    throw new Error("Error in ddb set item")
   }
 }
 
 export function ddbGetUser(key: string) {
-  if (key) {
-    return user_client.send(
-      new GetUser({ TableName: TableNameUser, Key: { githubId: key } }),
-    )
-  } else {
-    throw new Error("Error in ddb get item")
-  }
+  return userClient.send(
+    new GetUser({ TableName: TableNameUser, Key: { githubId: key } }),
+  )
 }
 
 export function ddbGetTeam(key: string) {
-  if (key) {
-    return team_client.send(
-      new GetTeam({ TableName: TableNameTeam, Key: { name: key } }),
-    )
-  } else {
-    throw new Error("Error in ddb get item")
-  }
+  return teamClient.send(
+    new GetTeam({ TableName: TableNameTeam, Key: { name: key } }),
+  )
 }

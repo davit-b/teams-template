@@ -1,4 +1,5 @@
 import { useCallback, useState } from "preact/hooks"
+import { JSX } from "preact/jsx-runtime"
 import { NewUserInput } from "../_model/_model.ts"
 
 export default function InviteModal({ teamId, teamName }: { teamId: string; teamName: string }) {
@@ -16,7 +17,7 @@ export default function InviteModal({ teamId, teamName }: { teamId: string; team
             <span class="font-bold">exact github Id.</span>{" "}
             If they are already in the team, you will be unable to add them.
           </p>
-          <InviteUser teamId={teamId} teamName={teamName} />
+          <InviteUser {...{ teamId, teamName }} />
         </div>
       </div>
     </div>
@@ -33,9 +34,7 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
   const [invalidGithubError, setInvalidGithubError] = useState(false)
   const [duplicateError, setDuplicateError] = useState(false)
 
-  // deno-lint-ignore ban-ts-comment
-  // @ts-ignore
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+  const handleChange = useCallback((e: JSX.TargetedEvent<HTMLInputElement, Event>, key: string) => {
     const element = e.target as HTMLInputElement
     setFields({ ...fields, [key]: element.value })
 

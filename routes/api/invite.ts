@@ -1,4 +1,4 @@
-import { HandlerContext, Handlers } from "$fresh/server.ts"
+import { Handlers } from "$fresh/server.ts"
 import { AdminRole, NewUserInput, Team, User } from "../../_model/_model.ts"
 import { teamKey, userKey } from "../../_utility/keyUtils.ts"
 import { ddbGetTeam, ddbGetUser, ddbSetItem } from "../../_utility/storage.ts"
@@ -6,27 +6,38 @@ import "https://deno.land/x/dotenv@v3.2.2/load.ts"
 
 const GH_TOKEN = Deno.env.get("gh_token")!
 
+interface GithubFetchResponse {
+  name: string
+  login: string
+  avatar_url: string
+}
+
 async function getOrCreateUser(githubId: string): Promise<User | undefined> {
   const ddbResult = await ddbGetUser(userKey(githubId))
   if (ddbResult.Item) {
     return ddbResult.Item
   } else {
-    const newUser: User = await fetch(`https://api.github.com/users/${githubId}`, {
-      headers: {
-        Authorization: `token ${GH_TOKEN}`,
+    const fetchResult: GithubFetchResponse = await fetch(
+      `https://api.github.com/users/${githubId}`,
+      {
+        headers: {
+          Authorization: `token ${GH_TOKEN}`,
+        },
       },
-    }).then((v) => v.json()).then((user) => {
-      return {
-        id: crypto.randomUUID(),
-        name: user.name,
-        githubId: user.login,
-        avatarUrl: user.avatar_url,
-        teams: [],
-        role: AdminRole,
-        membershipStatus: "Invited",
-        eventHistory: [],
-      }
-    })
+    ).then((v) => v.json())
+
+    const newUser: User = {
+      type: "user",
+      id: crypto.randomUUID(),
+      name: fetchResult.name,
+      githubId: fetchResult.login,
+      avatarUrl: fetchResult.avatar_url,
+      teams: [],
+      role: AdminRole,
+      membershipStatus: "Invited",
+      eventHistory: [],
+    }
+
     if (newUser.githubId) {
       await ddbSetItem(userKey(githubId), newUser)
       return newUser
@@ -37,12 +48,12 @@ async function getOrCreateUser(githubId: string): Promise<User | undefined> {
 }
 
 async function createNewTeam(teamName: string) {
-  const newTeam = {
+  const newTeam: Team = {
+    type: "team",
     id: crypto.randomUUID(),
     name: teamName,
     members: [],
     eventHistory: [],
-    teams: [],
     visiblity: true,
   }
   await ddbSetItem(teamKey(teamName), newTeam)
@@ -50,7 +61,7 @@ async function createNewTeam(teamName: string) {
 }
 
 export const handler: Handlers = {
-  async POST(req: Request, _ctx: HandlerContext) {
+  async POST(req, _ctx) {
     const input: NewUserInput = await req?.json()
     const newUser = await getOrCreateUser(input.githubId)
     if (newUser === undefined) {

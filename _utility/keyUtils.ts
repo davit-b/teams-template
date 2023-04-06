@@ -9,8 +9,5 @@ export function userKey(user: string) {
 }
 
 export function removePrefix(s: string, prefix: string) {
-  if (s.startsWith(prefix)) {
-    return s.slice(prefix.length)
-  }
-  return s
+  s.startsWith(prefix) ? s.slice(prefix.length) : s
 }
