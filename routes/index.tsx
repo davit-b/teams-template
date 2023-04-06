@@ -6,7 +6,7 @@ export default function Home() {
       <Head>
         <title>Github Teams Clone</title>
       </Head>
-      <div class="p-4 mx-auto max-w-screen-md">
+      <div class="p-4 mx-auto flex max-w-screen-md ">
         <a href="/crosshatch">Go to example team 'Crosshatch'</a>
       </div>
     </>

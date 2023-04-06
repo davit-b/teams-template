@@ -1,41 +1,24 @@
 import { useCallback, useState } from "preact/hooks"
 import { NewUserInput } from "../_model/_model.ts"
 
-export default function ButtonModal({ teamId, teamName }: { teamId: string; teamName: string }) {
+export default function ExpModal() {
   const [open, setOpen] = useState(false)
-
-  const exitModal = useCallback(() => {
-    setOpen(false)
-  }, [open])
-
-  const innerOnClick = useCallback((e: Event) => {
-    e.preventDefault()
-    e.stopPropagation()
-  }, [])
 
   return (
     <div>
-      <button
-        type="button"
-        class="btn btn-primary"
-        onClick={() => setOpen(true)}
-      >
-        Invite User
-      </button>
-      {open && (
-        <div
-          class="fixed top-0 bottom-0 right-0 left-0 bg-gray-500 z-50 opacity-90 flex justify-center items-center"
-          onClick={exitModal}
-        >
-          <div
-            class="w-5/6 max-w-xl bg-opacity-100 bg-[hsla(0,100%,50%,1)]"
-            onClick={innerOnClick}
-          >
-            <button type="button" onClick={() => setOpen(false)}>Close modal</button>
-            <InviteUser teamId={teamId} teamName={teamName} />
-          </div>
+      <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+      <div className="modal">
+        <div className="relative modal-box">
+          <label htmlFor="my-modal-3" className="absolute btn btn-sm btn-circle right-2 top-2">
+            ✕
+          </label>
+          <h3 className="text-lg font-bold">Congratulations random Internet user!</h3>
+          <p className="py-4">
+            You've been selected for a chance to get one year of subscription to use Wikipedia for
+            free!
+          </p>
         </div>
-      )}
+      </div>
     </div>
   )
 }

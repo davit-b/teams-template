@@ -32,7 +32,7 @@ export default function RemoveButton({ githubId, teamName }: RemoveInput) {
 
   return (
     <>
-      <button onClick={handleRemove} class="bg-gray-400 text-gray-800 rounded-lg px-2 py-1">
+      <button onClick={handleRemove} class="btn btn-primary">
         Remove {githubId}
       </button>
     </>

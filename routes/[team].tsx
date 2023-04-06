@@ -54,16 +54,16 @@ export default function Page({ data, params }: PageProps<Data>) {
   const teamName = params.team
   return (
     <div>
-      <div class="h-screen bg-gray-200 p-1">
+      <div class="h-screen p-1">
         <Head>
           <title>teams</title>
         </Head>
         <nav class="h-8">
-          <a class="px-4 py-2 mt-2" href="/">Home</a>
+          <a class="px-4 py-2 mt-2" href="/">Index</a>
         </nav>
         <main class="h-5/6">
           <div class="flex w-full h-full ">
-            <div class={`${bb} w-1/4 flex flex-col justify-start items-center`}>
+            <div class="w-1/4 flex flex-col justify-start items-center">
               <p class="font-bold text-2xl">{teamName}</p>
               <img
                 src="/logo.svg"
@@ -71,29 +71,31 @@ export default function Page({ data, params }: PageProps<Data>) {
                 alt="the fresh logo: a sliced lemon dripping with juice"
               />
             </div>
-            <div class={`w-3/4 flex-col ${bb}`}>
-              Team Manage app
-              <div class={bb}>Tab: Members</div>
-              <div class={`${bb} m-1 flex flex-col`}>
-                <div class="flex justify-between p-2 border-b-2 border-black">
+            <div class="w-3/4 flex-col">
+              {/* Team Manage app */}
+              {/* <div class="">Tab: Members</div> */}
+              <div class="m-1 flex flex-col">
+                <div class="flex justify-between p-2">
                   <form>
                     <input
                       type="text"
                       name="name"
                       value={memberQuery}
+                      class="input input-bordered input-secondary w-full max-w-xs"
                       placeholder="Search by name"
                     >
                     </input>
                     <button type="submit" />
                   </form>
                   <ButtonModal teamId={result.id} teamName={teamName} />
+                  <label htmlFor="my-modal-3" className="btn">open modal</label>
                 </div>
                 <div class="h-full w-full flex items-center">
                   <ul>
                     {Array.from(result.members).map((user: User) => {
                       return (
                         <li
-                          class="flex w-full text-gray-600 px-2 py-2 border-b-2"
+                          class="flex w-full  px-2 py-2 border-b-2"
                           key={user.githubId}
                         >
                           <img src={user.avatarUrl} width={40} height={40} />
@@ -109,7 +111,7 @@ export default function Page({ data, params }: PageProps<Data>) {
             </div>
           </div>
         </main>
-        <footer class="font-serif">
+        <footer class="font-serif flex justify-center items-center">
           <p>2023 Copyright Davit</p>
         </footer>
       </div>

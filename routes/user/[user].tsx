@@ -21,15 +21,14 @@ export default function Page({ data, params }: PageProps<Data>) {
   const { user } = data
   return (
     <div class="flex w-screen h-screen justify-center items-center">
-      <div class="flex flex-col w-2/3 h-2/3 bg-red-200 justify-center items-center">
+      <div class="flex flex-col w-2/3 h-2/3 justify-center items-center">
         <img src={user.avatarUrl} width={200} height={200} />
         <span>github:&nbsp;{user.githubId}</span>
         <span>id:&nbsp;{user.id}</span>
         <span>name:&nbsp;{user.name}</span>
         <div class="flex">
-          teams:&nbsp;{user.teams.map((team) => (
-            <a class="text-blue-500" href={`/${team}`}>{team}&nbsp;&nbsp;</a>
-          ))}
+          teams:&nbsp;{user.teams.map((team) => <a class="" href={`/${team}`}>{team}&nbsp;&nbsp;
+          </a>)}
         </div>
         <span>{user.role}</span>
         <span>{user.membershipStatus}</span>
