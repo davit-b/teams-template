@@ -17,6 +17,10 @@ Requirements
 - A Github API Key (optional: you will get throttled)
 - AWS Access and Secret Key
 - 2x AWS DynamoDB tables created with names defined in `_utility/ddb-client.ts`
+  - A table TableNameTeam = `construct_team_table` and primary key of
+    `TeamTablePK = "name"`
+  - A table TableNameUser = `construct_user_table` and primary key of
+    UserTablePK = `githubId`
 
 ### One-time operations!
 
