@@ -17,7 +17,7 @@ function isTeam(item: User | Team): item is Team {
   return (item as Team).members !== undefined
 }
 
-export function ddbSetItem(key: string, item: User | Team) {
+export function ddbSetItem(_key: string, item: User | Team) {
   if (isUser(item)) {
     return user_client.send(
       new PutUser({ TableName: TableNameUser, Item: item }),
