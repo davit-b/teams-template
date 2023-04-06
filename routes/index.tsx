@@ -2,7 +2,7 @@ import { Head } from "$fresh/runtime.ts"
 
 export default function Home() {
   // For the purpose of demo, the list of pre-made teams will be hardcoded.
-  const keyList = ["crosshatch", "deno", "fresh"]
+  const keyList = ["sasquatch", "deno", "fresh"]
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function Home() {
           <h2 class="mb-1">
             Select a team
           </h2>
-          <ul class="">
+          <ul>
             {keyList.map((key) => (
               <li class="link link-primary">
                 <a href={`/${key}`}>/{key}</a>
