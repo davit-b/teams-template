@@ -2,15 +2,13 @@ import { HandlerContext, Handlers } from "$fresh/server.ts"
 import { AdminRole, NewUserInput, Team, User } from "../../_model/_model.ts"
 import { teamKey, userKey } from "../../_utility/keyUtils.ts"
 import { ddbGetTeam, ddbGetUser, ddbSetItem } from "../../_utility/storage.ts"
-import "https://deno.land/x/dotenv/load.ts"
+import "https://deno.land/x/dotenv@v3.2.2/load.ts"
 
 const GH_TOKEN = Deno.env.get("gh_token")!
 
-async function getOrCreateUser(githubId: string): Promise<User> {
+async function getOrCreateUser(githubId: string): Promise<User | undefined> {
   const ddbResult = await ddbGetUser(userKey(githubId))
-  console.log("getOrCreateUser", ddbResult)
   if (ddbResult.Item) {
-    console.log("ddbResult.Item", ddbResult.Item)
     return ddbResult.Item
   } else {
     const newUser: User = await fetch(`https://api.github.com/users/${githubId}`, {
@@ -29,13 +27,16 @@ async function getOrCreateUser(githubId: string): Promise<User> {
         eventHistory: [],
       }
     })
-    ddbSetItem(userKey(githubId), newUser)
-
-    return newUser
+    if (newUser.githubId) {
+      await ddbSetItem(userKey(githubId), newUser)
+      return newUser
+    } else {
+      return undefined
+    }
   }
 }
 
-function createNewTeam(teamName: string) {
+async function createNewTeam(teamName: string) {
   const newTeam = {
     id: crypto.randomUUID(),
     name: teamName,
@@ -44,7 +45,7 @@ function createNewTeam(teamName: string) {
     teams: [],
     visiblity: true,
   }
-  ddbSetItem(teamKey(teamName), newTeam)
+  await ddbSetItem(teamKey(teamName), newTeam)
   return newTeam
 }
 
@@ -52,17 +53,22 @@ export const handler: Handlers = {
   async POST(req: Request, _ctx: HandlerContext) {
     const input: NewUserInput = await req?.json()
     const newUser = await getOrCreateUser(input.githubId)
+    if (newUser === undefined) {
+      return new Response(null, {
+        status: 406,
+      })
+    }
 
     const ddbItem = await ddbGetTeam(teamKey(input.teamName))
     const result: Team = (ddbItem.Item)
       ? ddbItem.Item
-      : createNewTeam(input.teamName)
+      : await createNewTeam(input.teamName)
 
     try {
       if (result.members.some((v) => v.githubId === input.githubId)) {
         console.error("User already exists")
         return new Response(JSON.stringify(result), {
-          status: 403,
+          status: 400,
         })
       } else {
         // Update team's memberList
@@ -70,10 +76,10 @@ export const handler: Handlers = {
           ...result,
           members: [...result.members, newUser],
         }
-        ddbSetItem(teamKey(input.teamName), updatedTeam)
+        await ddbSetItem(teamKey(input.teamName), updatedTeam)
 
         // Update user's teamList
-        addTeamToUser(input.teamName, input.githubId)
+        await addTeamToUser(input.teamName, input.githubId)
 
         return new Response(JSON.stringify(result), {
           status: 200,
@@ -96,7 +102,7 @@ async function addTeamToUser(teamName: string, githubId: string) {
       ...user,
       teams: [...user.teams, teamName],
     }
-    ddbSetItem(userKey(githubId), updatedUser)
+    await ddbSetItem(userKey(githubId), updatedUser)
   } else {
     throw new Error("Failure adding team to user")
   }

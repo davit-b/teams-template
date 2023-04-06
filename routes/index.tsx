@@ -1,15 +1,33 @@
 import { Head } from "$fresh/runtime.ts"
-import { useMemo } from "https://esm.sh/preact@10.11.0/hooks"
-import LinkTo from "../components/LinkTo.tsx"
 
 export default function Home() {
+  // For the purpose of demo, the list of pre-made teams will be hardcoded.
+  const keyList = ["crosshatch", "deno", "fresh"]
+
   return (
     <>
       <Head>
         <title>Github Teams Clone</title>
       </Head>
-      <div class="p-4 mx-auto max-w-screen-md">
-        <a href="/crosshatch">Go to example team 'Crosshatch'</a>
+      <div class="flex h-full w-full justify-center items-center">
+        <div class="p-4 mx-auto flex max-w-screen-md flex-col prose bg-primary-content w-1/2 mt-4">
+          <h2 class="mb-1">
+            Select a team
+          </h2>
+          <ul class="">
+            {keyList.map((key) => (
+              <li class="link link-primary">
+                <a href={`/${key}`}>/{key}</a>
+              </li>
+            ))}
+          </ul>
+          <h3>To create a new team,</h3>
+          <p>
+            Simply type in the URL bar `/&#60;teamName&#62;`. <br /> For example,{" "}
+            <a href="/avengers">/avengers</a>{" "}
+            will direct you to a newly created team called Avengers .
+          </p>
+        </div>
       </div>
     </>
   )
