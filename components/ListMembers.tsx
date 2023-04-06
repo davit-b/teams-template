@@ -1,12 +1,7 @@
 import { Team, User } from "../_model/_model.ts"
 import RemoveButton from "../islands/RemoveButton.tsx"
 
-interface Props {
-  result: Team
-  teamName: string
-}
-
-export default function ListMembers({ result, teamName }: Props) {
+export default function ListMembers({ result, teamName }: { result: Team; teamName: string }) {
   return (
     <ul class="h-full w-full flex flex-col items-stretch justify-center">
       {Array.from(result.members).map((user: User) => {

@@ -1,6 +1,5 @@
-const TEAM_PREFIX = "team_"
-const USER_PREFIX = "user_"
-
+// These utilities are helpful in the case that your DDB Primary Key
+// is different. Keep this here to simplify forks and refactors
 export function teamKey(team: string) {
   return `${team}`
 }

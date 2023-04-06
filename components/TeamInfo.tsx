@@ -1,10 +1,6 @@
 import { TeamName } from "../_model/_model.ts"
 
-interface Props {
-  teamName: TeamName
-}
-
-export default function TeamInfo({ teamName }: Props) {
+export default function TeamInfo({ teamName }: { teamName: string }) {
   return (
     <>
       <p class="font-bold text-3xl capitalize prose border-b-4 border-secondary text-secondary-content">

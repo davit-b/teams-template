@@ -3,10 +3,6 @@ import { User } from "../../_model/_model.ts"
 import { userKey } from "../../_utility/keyUtils.ts"
 import { ddbGetUser } from "../../_utility/storage.ts"
 
-interface Data {
-  user: User
-}
-
 export const handler: Handlers = {
   async GET(_, ctx) {
     const ddbResult = await ddbGetUser(userKey(ctx.params.user))
@@ -17,7 +13,7 @@ export const handler: Handlers = {
   },
 }
 
-export default function Page({ data, params }: PageProps<Data>) {
+export default function Page({ data }: PageProps<{ user: User }>) {
   const { user } = data
   return (
     <div class="flex w-screen h-screen justify-center items-center">
