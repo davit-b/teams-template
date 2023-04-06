@@ -1,0 +1,15 @@
+{
+  "name": "github-teams-clone",
+  "version": "1.0.0",
+  "description": "Only used for building stylesheet step",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.7",
+    "daisyui": "^2.31.0"
+  }
+}

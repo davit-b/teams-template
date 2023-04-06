@@ -1,6 +1,4 @@
 import { Head } from "$fresh/runtime.ts"
-import { useMemo } from "https://esm.sh/preact@10.11.0/hooks"
-import LinkTo from "../components/LinkTo.tsx"
 
 export default function Home() {
   return (

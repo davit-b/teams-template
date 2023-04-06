@@ -5,17 +5,19 @@ import { AppProps } from "$fresh/src/server/types.ts"
 
 export default function App({ Component }: AppProps) {
   return (
-    <html data-custom="data">
+    <html data-theme="night">
       <Head>
         <title>Deno Teams</title>
-        {/* <link rel="stylesheet" href={asset("style.css")} /> */}
-        {/* <link rel="icon" type="image/x-icon" href="../favicon.ico"></link> */}
         <link rel="icon" type="image/png" href="../icons8-motherboard-32.png"></link>
+        {/* Tailwind Stylesheet */}
+        {/* <link rel="stylesheet" href="/styles.css" /> */}
+        <link rel="stylesheet" href="../tailwind.css" />
         {
-          /*
+          /* <script src="https://cdn.tailwindcss.com"></script>
         <link
-          rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>"
+          href="https://cdn.jsdelivr.net/npm/daisyui@2.31.0/dist/full.css"
+          rel="stylesheet"
+          type="text/css"
         /> */
         }
       </Head>
