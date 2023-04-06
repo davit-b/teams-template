@@ -1,3 +1,4 @@
 .env
-package-lock.json
+_model/_sample_data.ts
 /node_modules
+package-lock.json
