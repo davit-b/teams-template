@@ -20,7 +20,7 @@ import { TypeSafeScanDocumentCommand } from "https://esm.sh/v106/typesafe-dynamo
 import { TypeSafeUpdateDocumentCommand } from "https://esm.sh/v106/typesafe-dynamodb@0.2.3/es2022/lib/update-document-command.js"
 
 import { Team, User } from "../_model/_model.ts"
-import "https://deno.land/x/dotenv/load.ts"
+import "https://deno.land/x/dotenv@v3.2.2/load.ts"
 
 export const Region = "us-east-1"
 
@@ -36,10 +36,10 @@ export const team_client = DynamoDBDocument.from(
 
 export const PutTeam = TypeSafePutDocumentCommand<Team>()
 export const GetTeam = TypeSafeGetDocumentCommand<Team, "name", undefined>()
-// export const Delete = TypeSafeDeleteDocumentCommand<Team, "id", undefined>()
-// export const Query = TypeSafeQueryDocumentCommand<Team>()
-// export const Scan = TypeSafeScanDocumentCommand<Team>()
-// export const Update = TypeSafeUpdateDocumentCommand<Team, "id", undefined>()
+export const DeleteTeam = TypeSafeDeleteDocumentCommand<Team, "id", undefined>()
+export const QueryTeam = TypeSafeQueryDocumentCommand<Team>()
+export const ScanTeam = TypeSafeScanDocumentCommand<Team>()
+export const UpdateTeam = TypeSafeUpdateDocumentCommand<Team, "id", undefined>()
 
 export const user_client = DynamoDBDocument.from(
   new DynamoDBClient({

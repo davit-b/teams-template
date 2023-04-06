@@ -51,26 +51,23 @@ export default function Page({ data, params }: PageProps<Data>) {
 
   const teamName = params.team
   return (
-    <div>
-      <div class="h-screen p-1">
-        <Header />
-        <Nav />
-        <main class="h-5/6 rounded-lg">
-          <div class="flex w-full h-full ">
-            <div class="w-1/4 flex flex-col justify-start items-center px-4 py-4 bg-accent-focus rounded-3xl">
-              <TeamInfo teamName={teamName} />
-            </div>
+    <div class="flex flex-col h-screen justify-between">
+      <Nav />
+      <main class="rounded-lg mb-auto px-2">
+        <div class="flex w-full h-full ">
+          <div class="w-1/4 flex flex-col justify-start items-center px-4 py-4 bg-accent-focus rounded-3xl">
+            <TeamInfo teamName={teamName} />
+          </div>
 
-            <div class="w-3/4 flex flex-col m-1">
-              <div class="m-1 flex flex-col items-stretch">
-                <ActionBox teamId={result.id} teamName={teamName} memberQuery={memberQuery} />
-                <ListMembers result={result} teamName={teamName} />
-              </div>
+          <div class="w-3/4 flex flex-col m-1">
+            <div class="m-1 flex flex-col items-stretch">
+              <ActionBox teamId={result.id} teamName={teamName} memberQuery={memberQuery} />
+              <ListMembers result={result} teamName={teamName} />
             </div>
           </div>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   )
 }

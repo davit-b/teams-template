@@ -2,7 +2,7 @@ import { Head } from "$fresh/runtime.ts"
 
 export default function Home() {
   // For the purpose of demo, the list of pre-made teams will be hardcoded.
-  const keyList = ["crosshatch", "deno", "the avengers"]
+  const keyList = ["crosshatch", "deno", "fresh"]
 
   return (
     <>
@@ -21,6 +21,12 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          <h3>To create a new team,</h3>
+          <p>
+            Simply type in the URL bar `/&#60;teamName&#62;`. <br /> For example,{" "}
+            <a href="/avengers">/avengers</a>{" "}
+            will direct you to a newly created team called Avengers .
+          </p>
         </div>
       </div>
     </>
