@@ -13,16 +13,16 @@ module.exports = {
       },
     },
   },
-  // daisy UI config
-  // daisyui: {
-  //   styled: true,
-  //   themes: true,
-  //   base: true,
-  //   utils: true,
-  //   logs: true,
-  //   rtl: false,
-  //   prefix: "",
-  //   darkTheme: "dark",
-  // },
+  // daisy UI config - https://daisyui.com/docs/config/
+  daisyui: {
+    styled: true,
+    themes: true,
+    base: true,
+    utils: true,
+    logs: true,
+    rtl: false,
+    prefix: "",
+    darkTheme: "dark",
+  },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
 }

@@ -1,4 +1,7 @@
-![screenshot](_docs/demo2.png)
+# Deno Fresh + Typesafe DynamoDB + DaisyUI + Tailwind\*
+
+![screenshot](_docs/demo2.png) \* not twind. Using tailwindstandalone-cli to
+generate a stylesheet.
 
 ---
 
