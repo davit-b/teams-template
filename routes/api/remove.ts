@@ -1,7 +1,6 @@
 import { Handlers } from "https://deno.land/x/fresh@1.1.4/server.ts"
 import { RemoveInput } from "../../_model/_model.ts"
-import { teamKey, userKey } from "../../_utility/keyUtils.ts"
-import { ddbGetTeam, ddbGetUser, ddbSetItem } from "../../_utility/storage.ts"
+import { ddbGetTeam, ddbGetUser, ddbSetItem } from "../../utility/storage.ts"
 
 export const handler: Handlers = {
   async POST(req, _) {
@@ -24,7 +23,7 @@ export const handler: Handlers = {
 }
 
 async function removeFromTeam(teamName: string, githubId: string) {
-  const item = await ddbGetTeam(teamKey(teamName))
+  const item = await ddbGetTeam(teamName)
 
   if (item.Item) {
     // Remove user from team
@@ -33,14 +32,14 @@ async function removeFromTeam(teamName: string, githubId: string) {
       ...item.Item,
       members: decreasedMembers,
     }
-    await ddbSetItem(teamKey(teamName), updatedTeam)
+    await ddbSetItem(teamName, updatedTeam)
   } else {
     throw new Error("Team does not exist in local storage. This should not happen")
   }
 }
 
 async function updateUserFields(teamName: string, githubId: string) {
-  const ddbResult = await ddbGetUser(userKey(githubId))
+  const ddbResult = await ddbGetUser(githubId)
 
   if (ddbResult.Item) {
     const user = ddbResult.Item
@@ -49,7 +48,7 @@ async function updateUserFields(teamName: string, githubId: string) {
       ...user,
       teams: user.teams.filter((n) => n !== teamName),
     }
-    await ddbSetItem(userKey(githubId), updatedUser)
+    await ddbSetItem(githubId, updatedUser)
   } else {
     throw new Error("User does not exist in local storage. Critical error")
   }

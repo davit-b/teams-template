@@ -3,3 +3,4 @@ _model/_sample_data.ts
 /node_modules
 package-lock.json
 tailwindcss
+star.ts

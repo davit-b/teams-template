@@ -53,8 +53,8 @@ export interface NewUserInput {
 
 export interface InviteUserAction {
   newUser: NewUserInput
-  toTeam: SafeOmit<Team, "eventHistory" | "members" | "visiblity">
-  inviter: SafeOmit<User, "eventHistory" | "membershipStatus" | "teams" | "avatarUrl" | "name">
+  toTeam: { id: string; name: string }
+  inviter: { id: string; githubId: string; role: Role }
 }
 
 export type InviteUserCallback = () => void

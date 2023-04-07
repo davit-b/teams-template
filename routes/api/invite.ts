@@ -1,7 +1,6 @@
 import { Handlers } from "$fresh/server.ts"
 import { AdminRole, NewUserInput, Team, User } from "../../_model/_model.ts"
-import { teamKey, userKey } from "../../_utility/keyUtils.ts"
-import { ddbGetTeam, ddbGetUser, ddbSetItem } from "../../_utility/storage.ts"
+import { ddbGetTeam, ddbGetUser, ddbSetItem } from "../../utility/storage.ts"
 import "https://deno.land/x/dotenv@v3.2.2/load.ts"
 
 const GH_TOKEN = Deno.env.get("gh_token")!
@@ -13,7 +12,7 @@ interface GithubFetchResponse {
 }
 
 async function getOrCreateUser(githubId: string): Promise<User | undefined> {
-  const ddbResult = await ddbGetUser(userKey(githubId))
+  const ddbResult = await ddbGetUser(githubId)
   if (ddbResult.Item) {
     return ddbResult.Item
   } else {
@@ -39,7 +38,7 @@ async function getOrCreateUser(githubId: string): Promise<User | undefined> {
     }
 
     if (newUser.githubId) {
-      await ddbSetItem(userKey(githubId), newUser)
+      await ddbSetItem(githubId, newUser)
       return newUser
     } else {
       return undefined
@@ -56,7 +55,7 @@ async function createNewTeam(teamName: string) {
     eventHistory: [],
     visiblity: true,
   }
-  await ddbSetItem(teamKey(teamName), newTeam)
+  await ddbSetItem(teamName, newTeam)
   return newTeam
 }
 
@@ -70,7 +69,7 @@ export const handler: Handlers = {
       })
     }
 
-    const ddbItem = await ddbGetTeam(teamKey(input.teamName))
+    const ddbItem = await ddbGetTeam(input.teamName)
     const result: Team = (ddbItem.Item)
       ? ddbItem.Item
       : await createNewTeam(input.teamName)
@@ -87,7 +86,7 @@ export const handler: Handlers = {
           ...result,
           members: [...result.members, newUser],
         }
-        await ddbSetItem(teamKey(input.teamName), updatedTeam)
+        await ddbSetItem(input.teamName, updatedTeam)
 
         // Update user's teamList
         await addTeamToUser(input.teamName, input.githubId)
@@ -106,14 +105,14 @@ export const handler: Handlers = {
 }
 
 async function addTeamToUser(teamName: string, githubId: string) {
-  const ddbResult = await ddbGetUser(userKey(githubId))
+  const ddbResult = await ddbGetUser(githubId)
   if (ddbResult.Item) {
     const user: User = ddbResult.Item
     const updatedUser = {
       ...user,
       teams: [...user.teams, teamName],
     }
-    await ddbSetItem(userKey(githubId), updatedUser)
+    await ddbSetItem(githubId, updatedUser)
   } else {
     throw new Error("Failure adding team to user")
   }

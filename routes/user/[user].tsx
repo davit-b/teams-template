@@ -1,11 +1,10 @@
 import { Handlers, PageProps } from "$fresh/server.ts"
 import { User } from "../../_model/_model.ts"
-import { userKey } from "../../_utility/keyUtils.ts"
-import { ddbGetUser } from "../../_utility/storage.ts"
+import { ddbGetUser } from "../../utility/storage.ts"
 
 export const handler: Handlers = {
   async GET(_, ctx) {
-    const ddbResult = await ddbGetUser(userKey(ctx.params.user))
+    const ddbResult = await ddbGetUser(ctx.params.user)
     if (!ddbResult.Item) {
       return ctx.renderNotFound()
     }

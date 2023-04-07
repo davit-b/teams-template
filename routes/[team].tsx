@@ -1,12 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts"
 import { Team } from "../_model/_model.ts"
-import { teamKey } from "../_utility/keyUtils.ts"
-import { ddbGetTeam } from "../_utility/storage.ts"
 import ActionBox from "../components/ActionBox.tsx"
 import Footer from "../components/Footer.tsx"
 import ListMembers from "../components/ListMembers.tsx"
 import Nav from "../components/Nav.tsx"
 import TeamInfo from "../components/TeamInfo.tsx"
+import { ddbGetTeam } from "../utility/storage.ts"
 // @deno-types="https://deno.land/x/fuse@v6.4.1/dist/fuse.d.ts"
 import Fuse from "https://deno.land/x/fuse@v6.4.1/dist/fuse.esm.js"
 
@@ -14,7 +13,7 @@ export const handler: Handlers = {
   async GET(req, ctx) {
     const url = new URL(req.url)
     const memberQuery = url.searchParams.get("name") || ""
-    const ddbTeam = await ddbGetTeam(teamKey(ctx.params.team))
+    const ddbTeam = await ddbGetTeam(ctx.params.team)
     const result: Team = (ddbTeam.Item)
       ? ddbTeam.Item
       : {
