@@ -1,5 +1,5 @@
 export default function Home() {
-  // For the purpose of demo, the list of pre-made teams will be hardcoded.
+  // For the purpose of demo, the index on pre-made teams will be fixed
   const keyList = ["sasquatch", "deno", "fresh"]
 
   return (

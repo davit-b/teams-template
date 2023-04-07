@@ -3,8 +3,6 @@ import { AdminRole, NewUserInput, Team, User } from "../../_model/_model.ts"
 import { ddbGetTeam, ddbGetUser, ddbSetItem } from "../../utility/storage.ts"
 import "https://deno.land/x/dotenv@v3.2.2/load.ts"
 
-const GH_TOKEN = Deno.env.get("gh_token")!
-
 interface GithubFetchResponse {
   name: string
   login: string
@@ -20,7 +18,7 @@ async function getOrCreateUser(githubId: string): Promise<User | undefined> {
       `https://api.github.com/users/${githubId}`,
       {
         headers: {
-          Authorization: `token ${GH_TOKEN}`,
+          Authorization: `token ${Deno.env.get("gh_token")!}`,
         },
       },
     ).then((v) => v.json())
@@ -87,7 +85,6 @@ export const handler: Handlers = {
           members: [...result.members, newUser],
         }
         await ddbSetItem(input.teamName, updatedTeam)
-
         // Update user's teamList
         await addTeamToUser(input.teamName, input.githubId)
 

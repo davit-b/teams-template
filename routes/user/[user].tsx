@@ -1,6 +1,5 @@
 import { Handlers, PageProps } from "$fresh/server.ts"
 import { User } from "../../_model/_model.ts"
-import Footer from "../../components/Footer.tsx"
 import { ddbGetUser } from "../../utility/storage.ts"
 
 export const handler: Handlers = {

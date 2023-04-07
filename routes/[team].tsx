@@ -1,9 +1,7 @@
 import { Handlers, PageProps } from "$fresh/server.ts"
 import { Team } from "../_model/_model.ts"
 import ActionBox from "../components/ActionBox.tsx"
-import Footer from "../components/Footer.tsx"
 import ListMembers from "../components/ListMembers.tsx"
-import Nav from "../components/Nav.tsx"
 import TeamInfo from "../components/TeamInfo.tsx"
 import { ddbGetTeam } from "../utility/storage.ts"
 // @deno-types="https://deno.land/x/fuse@v6.4.1/dist/fuse.d.ts"
@@ -51,7 +49,12 @@ export default function Page({ data, params }: PageProps<Data>) {
   const teamName = params.team
   return (
     <div class="flex flex-col h-screen justify-between">
-      <Nav />
+      <nav class="bg-second flex mb-2 p-2 rounded-lg">
+        <a class="text-3xl font-extrabold" href="/">
+          <span class="text-first">demo</span>
+          <span class="text-fourth">TEAMS</span>
+        </a>
+      </nav>
       <main class="rounded-lg mb-auto px-2">
         <div class="flex w-full h-full ">
           <div class="w-1/4 flex flex-col justify-start items-center px-4 py-4 bg-second rounded-3xl">
