@@ -66,7 +66,6 @@ export default function Page({ data, params }: PageProps<Data>) {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   )
 }
