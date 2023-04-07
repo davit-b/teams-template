@@ -105,3 +105,12 @@ export const TableNameUser = "construct_user_table"
 const TeamTablePK = "name"
 const UserTablePK = "githubId"
 ```
+
+#### Generating the tailwind.css stylesheet...?
+
+It get's generated at runtime during the `deno task start` If you look in the
+command
+`"start": "tailwindcss -i ./static/input.css -o ./static/tailwind.css --minify --watch & deno run -A --watch=static/,routes/ dev.ts"`
+
+You can omit the `--minify` and see the full tailwind.css file. The difference
+in filesize is 79kB vs 71kB

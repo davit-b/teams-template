@@ -1,7 +1,7 @@
 {
   "tasks": {
     "star": "deno run -A _tasks/star.ts && deno cache --no-check=remote star.ts",
-    "start": "tailwindcss -i ./static/input.css -o ./static/tailwind.css --watch & deno run -A --watch=static/,routes/ dev.ts"
+    "start": "tailwindcss -i ./static/input.css -o ./static/tailwind.css --minify --watch & deno run -A --watch=static/,routes/ dev.ts"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
