@@ -14,13 +14,13 @@ export default function ActionBox({ teamId, teamName, memberQuery }: ActionBoxPr
           type="text"
           name="name"
           value={memberQuery}
-          class="input input-bordered input-secondary w-full max-w-xs"
+          class="input input-bordered  w-full max-w-xs"
           placeholder="Search by name"
         />
         <button type="submit" />
       </form>
       <InviteModal teamId={teamId} teamName={teamName} />
-      <label htmlFor="my-modal-3" className="btn btn-primary">Invite New Member</label>
+      <label htmlFor="my-modal-3" className="btn btn-primary">Invite Member</label>
     </div>
   )
 }
