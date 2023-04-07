@@ -8,19 +8,21 @@ export interface ActionBoxProps {
 
 export default function ActionBox({ teamId, teamName, memberQuery }: ActionBoxProps) {
   return (
-    <div class="flex justify-between p-2 border-b-4">
+    <div class="flex justify-between p-2 border-b-2 border-slate-300">
       <form>
         <input
           type="text"
           name="name"
           value={memberQuery}
-          class="input input-bordered  w-full max-w-xs"
+          class="input input-bordered w-full max-w-xs"
           placeholder="Search by name"
         />
         <button type="submit" />
       </form>
       <InviteModal teamId={teamId} teamName={teamName} />
-      <label htmlFor="my-modal-3" className="btn btn-primary">Invite Member</label>
+      <label htmlFor="my-modal-3" className="text-white btn bg-first border-first">
+        Invite Member
+      </label>
     </div>
   )
 }

@@ -6,7 +6,7 @@ export default function ListMembers({ result, teamName }: { result: Team; teamNa
     <ul class="h-full w-full flex flex-col items-stretch justify-center">
       {result.members.map((user) => {
         return (
-          <li class="flex px-2 py-2 border-b-2" key={user.githubId}>
+          <li class="flex px-2 py-2 border-b-2 border-slate-200" key={user.githubId}>
             <div class="flex w-full items-center">
               <img class="w-16 h-16 rounded-lg basis-10" src={user.avatarUrl} />
               <a class="text-3xl flex-1 ml-6" href={`/user/${user.githubId}`}>{user.name}</a>

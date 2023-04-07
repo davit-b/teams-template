@@ -54,7 +54,7 @@ export default function Page({ data, params }: PageProps<Data>) {
       <Nav />
       <main class="rounded-lg mb-auto px-2">
         <div class="flex w-full h-full ">
-          <div class="w-1/4 flex flex-col justify-start items-center px-4 py-4 bg-gray-100 rounded-3xl">
+          <div class="w-1/4 flex flex-col justify-start items-center px-4 py-4 bg-second rounded-3xl">
             <TeamInfo teamName={teamName} />
           </div>
 

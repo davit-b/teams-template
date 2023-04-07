@@ -1,6 +1,3 @@
-import { Head } from "$fresh/runtime.ts"
-import Footer from "../components/Footer.tsx"
-
 export default function Home() {
   // For the purpose of demo, the list of pre-made teams will be hardcoded.
   const keyList = ["sasquatch", "deno", "fresh"]
@@ -8,7 +5,7 @@ export default function Home() {
   return (
     <>
       <div class="flex h-full w-full justify-center items-center mb-20">
-        <div class="p-4 mx-auto flex max-w-screen-md flex-col prose bg-accent w-1/2 mt-4">
+        <div class="p-4 mx-auto flex max-w-screen-md flex-col prose bg-second w-1/2 mt-4">
           <h2 class="mb-1">
             Select a team
           </h2>

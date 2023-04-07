@@ -8,7 +8,10 @@ export default function InviteModal({ teamId, teamName }: { teamId: string; team
       <input type="checkbox" id="my-modal-3" className="modal-toggle" />
       <div className="modal">
         <div className="relative modal-box">
-          <label htmlFor="my-modal-3" className="absolute btn btn-sm btn-circle right-2 top-2">
+          <label
+            htmlFor="my-modal-3"
+            className="absolute btn btn-xs btn-outline btn-circle text-fourth right-2 top-2"
+          >
             ✕
           </label>
           <h3 className="text-lg font-bold">Add a member</h3>
@@ -87,6 +90,7 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
     <form class="flex justify-between items-center ">
       <input
         type="text"
+        class="input input-bordered"
         name="githubId"
         placeholder="Enter Github username"
         value={fields.githubId}
@@ -96,7 +100,7 @@ function InviteUser({ teamId, teamName }: { teamId: string; teamName: string }) 
       {invalidGithubError && <p class="text-error-content">Invalid GithubID</p>}
       {duplicateError && <p class="text-error-content">User already added</p>}
 
-      <button class="btn btn-primary" onClick={handleSubmit}>Submit</button>
+      <button class="btn bg-first border-first text-white" onClick={handleSubmit}>Submit</button>
     </form>
   )
 }
