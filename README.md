@@ -1,11 +1,12 @@
-![screenshot](_docs/demo.png)
+![screenshot](_docs/demo2.png)
 
 ---
 
 ## Notes
 
 - **Deno Fresh**
-- **DynamoDB** for a backend.
+- **DynamoDB** For a firestore like EZ-PZ Get(JSON) and Put(JSON) experience.
+  (Trust me, look at how easy it )
 - **typesafe-dynamo** - for creating a typed client to the dynamoDB table
   - For simplicity sake, the primary keys on the tables are set to User: `name`
     and Team: `githubId`. You can change however you like.
@@ -15,6 +16,29 @@
     tailwind ecosystem.
 - **DaisyUI** and **Tailwind Typography** plugins - these are used with
   tailwind.
+
+<details>
+  <summary>ABOUT DYNAMODB</summary>
+
+#### ...It's easy at pie.
+
+DynamoDB sucks in a lot of regards. But with typescript and lil' magic, you can
+make it as easy a Firestore! Here's the flow
+
+1. Define your typescript types for you data model
+2. Copy and plug those types into `utility.ddb-client.ts`
+   1. Note what your Primary key is for the items. It can be `id` or for the
+      (like me) use the `githubId`.
+3. Call Get and Put. (You can implement Update... thou it's trickier)
+
+That's it! Look how easy it is. ![dynamo](_docs/ddb.png)
+
+Your typescript types define the model, and there is no need to define a Dynamo
+schema or anything. It kinda just works. Takes ~10 min to set up.
+
+</details>
+
+---
 
 #### Requirements
 
@@ -30,7 +54,8 @@
 
 1. Download the TailwindCLI into this directory by running
    `download-tailwind-macos.sh`
-2. Run `npm install` to install the daisyui and tailwind typography modules
+2. Run `npm install` to install the dev-time dependencies daisyui and typography
+   modules
 3. Create a `.env` file and fill in
 
 ```bash
