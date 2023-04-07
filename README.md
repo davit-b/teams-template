@@ -20,6 +20,8 @@ generate a stylesheet.
 - **DaisyUI** and **Tailwind Typography** plugins - these are used with
   tailwind.
 
+---
+
 <details>
   <summary>ABOUT DYNAMODB</summary>
 
@@ -113,4 +115,4 @@ command
 `"start": "tailwindcss -i ./static/input.css -o ./static/tailwind.css --minify --watch & deno run -A --watch=static/,routes/ dev.ts"`
 
 You can omit the `--minify` and see the full tailwind.css file. The difference
-in filesize is 79kB vs 71kB
+in filesize is 79kB vs 70kB
