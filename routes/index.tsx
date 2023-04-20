@@ -1,24 +1,29 @@
-import { Head } from "$fresh/runtime.ts";
-import Counter from "../islands/Counter.tsx";
-
 export default function Home() {
+  // For the purpose of demo, the index on pre-made teams will be fixed
+  const keyList = ["sasquatch", "deno", "fresh"]
+
   return (
     <>
-      <Head>
-        <title>Fresh App</title>
-      </Head>
-      <div class="p-4 mx-auto max-w-screen-md">
-        <img
-          src="/logo.svg"
-          class="w-32 h-32"
-          alt="the fresh logo: a sliced lemon dripping with juice"
-        />
-        <p class="my-6">
-          Welcome to `fresh`. Try updating this message in the ./routes/index.tsx
-          file, and refresh.
-        </p>
-        <Counter start={3} />
+      <div class="flex h-full w-full justify-center items-center mb-20">
+        <div class="p-4 mx-auto flex max-w-screen-md flex-col prose bg-second w-1/2 mt-4">
+          <h2 class="mb-1">
+            Select a team
+          </h2>
+          <ul>
+            {keyList.map((key) => (
+              <li class="link link-primary">
+                <a href={`/${key}`}>/{key}</a>
+              </li>
+            ))}
+          </ul>
+          <h3>To create a new team,</h3>
+          <p>
+            Simply type in the URL bar `/&#60;teamName&#62;`. <br /> For example,{" "}
+            <a href="/avengers">/avengers</a>{" "}
+            will direct you to a newly created team called Avengers .
+          </p>
+        </div>
       </div>
     </>
-  );
+  )
 }

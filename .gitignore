@@ -1,1 +1,8 @@
 .env
+_model/_sample_data.ts
+/node_modules
+package-lock.json
+tailwindcss
+star.ts
+_tasks
+deno.lock

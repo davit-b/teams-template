@@ -1,16 +1,40 @@
-import { Head } from "$fresh/runtime.ts"
 import { Handlers, PageProps } from "$fresh/server.ts"
-import { Team, User } from "../_model/_model.ts"
-import ButtonModal from "../islands/ButtonModal.tsx"
-
-const bb = "border-2 border-black"
+import { Team } from "../_model/_model.ts"
+import ActionBox from "../components/ActionBox.tsx"
+import ListMembers from "../components/ListMembers.tsx"
+import TeamInfo from "../components/TeamInfo.tsx"
+import { ddbGetTeam } from "../utility/storage.ts"
+// @deno-types="https://deno.land/x/fuse@v6.4.1/dist/fuse.d.ts"
+import Fuse from "https://deno.land/x/fuse@v6.4.1/dist/fuse.esm.js"
 
 export const handler: Handlers = {
-  GET(req, ctx) {
+  async GET(req, ctx) {
     const url = new URL(req.url)
     const memberQuery = url.searchParams.get("name") || ""
-    const result = JSON.parse(localStorage.getItem("test4") ?? "")
-    return ctx.render({ result, memberQuery })
+    const ddbTeam = await ddbGetTeam(ctx.params.team)
+    const result: Team = (ddbTeam.Item)
+      ? ddbTeam.Item
+      : {
+        type: "team",
+        id: crypto.randomUUID(),
+        name: ctx.params.team,
+        members: [],
+        eventHistory: [],
+        visiblity: true,
+      }
+    const fuse = new Fuse(result.members, { keys: ["githubId"] })
+
+    if (memberQuery) {
+      return ctx.render({
+        result: {
+          ...result,
+          members: fuse.search(memberQuery).map((e) => e.item),
+        },
+        memberQuery,
+      })
+    } else {
+      return ctx.render({ result, memberQuery })
+    }
   },
 }
 
@@ -22,61 +46,29 @@ interface Data {
 export default function Page({ data, params }: PageProps<Data>) {
   const { result, memberQuery } = data
 
-  console.log(result)
   const teamName = params.team
   return (
-    <div>
-      <div class="h-screen bg-gray-200 p-1">
-        <Head>
-          <title>teams</title>
-        </Head>
-        <nav class="h-8">
-          <a class="px-4 py-2 mt-2" href="/">Home</a>
-        </nav>
-        <main class="h-5/6">
-          <div class="flex w-full h-full">
-            <div class={`${bb} w-1/4`}>Team {teamName}</div>
-            <div class={`w-3/4 flex-col ${bb}`}>
-              Team Manage app
-              <div class={bb}>Tab: Members</div>
-              <div class={`${bb} m-1 flex flex-col`}>
-                <div class="flex justify-between p-2 border-b-2 border-black">
-                  <form>
-                    <input
-                      type="text"
-                      name="name"
-                      value={memberQuery}
-                      placeholder="Search by name"
-                    >
-                    </input>
-                    <button type="submit" />
-                  </form>
-                  <ButtonModal />
-                </div>
-                <div class="h-full w-full flex items-center">
-                  <ul>
-                    {Array.from(result.members).map((user: User) => {
-                      return (
-                        <li
-                          class="flex w-full text-gray-600 px-2 py-2 border-b-2"
-                          key={user.githubId}
-                        >
-                          <img src={user.avatarUrl} width={40} height={40} />
-                          <h1 class="text-3xl">{user.name}</h1>
-                          <p class="px-2 flex items-center text-sm">login: {user.githubId}</p>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </div>
-              </div>
+    <div class="flex flex-col h-screen justify-between">
+      <nav class="bg-second flex mb-2 p-2 rounded-lg">
+        <a class="text-3xl font-extrabold" href="/">
+          <span class="text-first">demo</span>
+          <span class="text-fourth">TEAMS</span>
+        </a>
+      </nav>
+      <main class="rounded-lg mb-auto px-2">
+        <div class="flex w-full h-full ">
+          <div class="w-1/4 flex flex-col justify-start items-center px-4 py-4 bg-second rounded-3xl">
+            <TeamInfo teamName={teamName} />
+          </div>
+
+          <div class="w-3/4 flex flex-col m-1">
+            <div class="m-1 flex flex-col items-stretch">
+              <ActionBox teamId={result.id} teamName={teamName} memberQuery={memberQuery} />
+              <ListMembers result={result} teamName={teamName} />
             </div>
           </div>
-        </main>
-        <footer class="font-serif">
-          <p>2023 Copyright Davit</p>
-        </footer>
-      </div>
+        </div>
+      </main>
     </div>
   )
 }
